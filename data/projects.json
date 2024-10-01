@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Community Science Museum",
+    "description": "A brief description of Project One.",
+    "image": "/images/Community Science Museum.png",
+    "github": "https://github.com/Ulvounth/Semester-project",
+    "live": "https://shiny-crisp-dfc85a.netlify.app"
+  },
+  {
+    "title": "Social Media Platform",
+    "description": "A brief description of Project Two.",
+    "image": "/images/Social-media.png",
+    "github": "https://github.com/Ulvounth/social-app",
+    "live": "https://zesty-selkie-6b0948.netlify.app/"
+  },
+  {
+    "title": "Auction Website",
+    "description": "A brief description of Project Three.",
+    "image": "/images/Auction.png",
+    "github": "https://github.com/Ulvounth/Semester-Project-2",
+    "live": "https://bidbazaarr.netlify.app/"
+  }
+]
