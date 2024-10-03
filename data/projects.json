@@ -9,11 +9,11 @@
   },
   {
     "id": "2",
-    "title": "Social Media Platform",
-    "description": "This project involves the development of a new JavaScript front-end client for an existing social media platform. The primary goal is to create a user interface that is both aesthetically pleasing and responsive, providing an engaging user experience. The application allows users to interact with social media content in various ways, including viewing posts, creating new posts, editing existing content, and deleting posts.",
-    "image": "/images/Social-media.png",
-    "github": "https://github.com/Ulvounth/social-app",
-    "live": "https://zesty-selkie-6b0948.netlify.app/"
+    "title": "React E-Commerce Store",
+    "description": "This project is a dynamic e-commerce store developed using React with Vite and TypeScript, showcasing a modern, responsive design styled with styled-components. It features a robust e-commerce functionality set, including product listings, an advanced cart system, checkout process, and contact form validation.",
+    "image": "/images/javascript-frameworks.png",
+    "github": "https://github.com/Ulvounth/Javascript-Frameworks-CA",
+    "live": "https://infnity-goods.netlify.app/"
   },
   {
     "id": "3",
