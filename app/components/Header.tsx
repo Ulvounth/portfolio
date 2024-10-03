@@ -7,7 +7,7 @@ const Header = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow sticky top-0 z-50">
+    <header className=" shadow sticky top-0 z-50">
       <nav className="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
         <div className="flex items-center">
           <div className="text-2xl font-bold">
@@ -48,28 +48,22 @@ const Header = () => {
         >
           <ul className="flex flex-col md:flex-row md:space-x-6 mt-4 md:mt-0">
             <li>
-              <Link href="/" className="text-gray-700 hover:text-blue-500">
+              <Link href="/" className=" hover:text-blue-500">
                 Home
               </Link>
             </li>
             <li>
-              <Link
-                href="/projects"
-                className="text-gray-700 hover:text-blue-500"
-              >
+              <Link href="/projects" className=" hover:text-blue-500">
                 Projects
               </Link>
             </li>
             <li>
-              <Link href="/about" className="text-gray-700 hover:text-blue-500">
+              <Link href="/about" className=" hover:text-blue-500">
                 About
               </Link>
             </li>
             <li>
-              <Link
-                href="/contact"
-                className="text-gray-700 hover:text-blue-500"
-              >
+              <Link href="/contact" className=" hover:text-blue-500">
                 Contact
               </Link>
             </li>

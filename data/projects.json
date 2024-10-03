@@ -1,21 +1,24 @@
 [
   {
-    "title": "Community Science Museum",
-    "description": "A brief description of Project One.",
-    "image": "/images/Community Science Museum.png",
-    "github": "https://github.com/Ulvounth/Semester-project",
+    "id": "1",
+    "title": "Holidaze",
+    "description": "This is my final project for Noroff, developed using Next.js, TypeScript, and Tailwind CSS. It is a holiday booking platform called Holidaze, where users can browse, book, and manage vacation rentals effortlessly.",
+    "image": "/images/holidaze-home.png",
+    "github": "https://github.com/Ulvounth/holidaze",
     "live": "https://shiny-crisp-dfc85a.netlify.app"
   },
   {
+    "id": "2",
     "title": "Social Media Platform",
-    "description": "A brief description of Project Two.",
+    "description": "This project involves the development of a new JavaScript front-end client for an existing social media platform. The primary goal is to create a user interface that is both aesthetically pleasing and responsive, providing an engaging user experience. The application allows users to interact with social media content in various ways, including viewing posts, creating new posts, editing existing content, and deleting posts.",
     "image": "/images/Social-media.png",
     "github": "https://github.com/Ulvounth/social-app",
     "live": "https://zesty-selkie-6b0948.netlify.app/"
   },
   {
+    "id": "3",
     "title": "Auction Website",
-    "description": "A brief description of Project Three.",
+    "description": "This was my second year semester project at Noroff. Develop an engaging front-end application for an auction website where users can register, log in, update avatars, view credits, create listings, and bid on items. Leverages the Noroff API for backend functionality, ensuring a seamless user experience for both registered and unregistered users.",
     "image": "/images/Auction.png",
     "github": "https://github.com/Ulvounth/Semester-Project-2",
     "live": "https://bidbazaarr.netlify.app/"
