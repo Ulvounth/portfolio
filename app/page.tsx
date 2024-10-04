@@ -21,13 +21,15 @@ export default function Home() {
               src="/images/Andreas.jpg"
               alt="Andreas"
               fill
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
               style={{ objectFit: "cover" }}
+              priority
             />
           </div>
         </div>
         {/* Text Section */}
         <div className="md:w-1/2 h-1/2 md:h-full flex flex-col justify-center items-center md:items-start px-4 md:px-8">
-          <h1 className="text-3xl md:text-5xl font-bold text-primary mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold  mb-4">
             Hi, I am Andreas
           </h1>
           <p className="text-lg md:text-2xl text-foreground mb-6 max-w-lg">
