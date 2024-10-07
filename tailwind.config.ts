@@ -8,17 +8,16 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class", // Enable dark mode using the 'class' strategy
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
-        primary: "#1D4ED8",
-        primaryDark: "#2563EB",
+        primary: "#4C51BF", // A nice purple-blue color
+        primaryDark: "#434190", // Darker shade of purple-blue
         secondary: "#9333EA",
         secondaryDark: "#7E22CE",
-        accent: "#F59E0B",
-        background: "rgb(34 35 41)", // Dark background
-        foreground: "#F9FAFB", // Light text color
+        background: "#1A202C", // Darker background color
+        foreground: "#E2E8F0", // Light foreground color
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

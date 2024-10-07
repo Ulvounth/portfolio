@@ -5,7 +5,8 @@
     "description": "This is my final project for Noroff, developed using Next.js, TypeScript, and Tailwind CSS. It is a holiday booking platform called Holidaze, where users can browse, book, and manage vacation rentals effortlessly.",
     "image": "/images/holidaze-home.png",
     "github": "https://github.com/Ulvounth/holidaze",
-    "live": "https://shiny-crisp-dfc85a.netlify.app"
+    "live": "https://shiny-crisp-dfc85a.netlify.app",
+    "tags": ["Next.js", "TypeScript", "Tailwind CSS"]
   },
   {
     "id": "2",
@@ -13,7 +14,8 @@
     "description": "This project is a dynamic e-commerce store developed using React with Vite and TypeScript, showcasing a modern, responsive design styled with styled-components. It features a robust e-commerce functionality set, including product listings, an advanced cart system, checkout process, and contact form validation.",
     "image": "/images/javascript-frameworks.png",
     "github": "https://github.com/Ulvounth/Javascript-Frameworks-CA",
-    "live": "https://infnity-goods.netlify.app/"
+    "live": "https://infnity-goods.netlify.app/",
+    "tags": ["React", "Vite", "TypeScript", "Styled-Components"]
   },
   {
     "id": "3",
@@ -21,6 +23,7 @@
     "description": "This was my second year semester project at Noroff. Develop an engaging front-end application for an auction website where users can register, log in, update avatars, view credits, create listings, and bid on items. Leverages the Noroff API for backend functionality, ensuring a seamless user experience for both registered and unregistered users.",
     "image": "/images/Auction.png",
     "github": "https://github.com/Ulvounth/Semester-Project-2",
-    "live": "https://bidbazaarr.netlify.app/"
+    "live": "https://bidbazaarr.netlify.app/",
+    "tags": ["HTML", "Bootstrap", "Sass", "JavaScript"]
   }
 ]

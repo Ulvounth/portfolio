@@ -1,5 +1,3 @@
-// app/page.tsx
-
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "./components/Carousel";
@@ -11,12 +9,32 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div>
-      {/* Full-screen section */}
-      <div className="flex flex-col md:flex-row h-screen">
+    <div className="bg-background text-foreground">
+      {/* Full-screen hero section */}
+      <div className="container h-dvh mx-auto px-4 py-16 md:py-24 lg:py-32 flex flex-col md:flex-row items-center">
+        {/* Text Section */}
+        <div className="md:w-1/2 h-full flex flex-col justify-center items-center md:items-start space-y-4 md:space-y-6">
+          <h1 className="text-4xl md:text-6xl font-extrabold">
+            ANDREAS ULVUND
+          </h1>
+          <h2 className="text-xl md:text-4xl font-semibold">
+            FRONTEND DEVELOPER
+          </h2>
+          <p className="text-base md:text-lg text-gray-300 max-w-md">
+            I implement user interface design and solve user problems with
+            modern web technologies. Let&apos;s build something great together.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-4 bg-white text-background px-6 py-2 rounded-full hover:bg-primaryDark hover:text-white transition-colors"
+          >
+            Contact Me
+          </Link>
+        </div>
+
         {/* Image Section */}
-        <div className="md:w-1/2 h-1/2 md:h-full flex items-center justify-center bg-background">
-          <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden">
+        <div className="md:w-1/2 h-full flex items-center justify-center mt-8 md:mt-0">
+          <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden shadow-lg">
             <Image
               src="/images/Andreas.jpg"
               alt="Andreas"
@@ -27,25 +45,10 @@ export default function Home() {
             />
           </div>
         </div>
-        {/* Text Section */}
-        <div className="md:w-1/2 h-1/2 md:h-full flex flex-col justify-center items-center md:items-start px-4 md:px-8">
-          <h1 className="text-3xl md:text-5xl font-bold  mb-4">
-            Hi, I am Andreas
-          </h1>
-          <p className="text-lg md:text-2xl text-foreground mb-6 max-w-lg">
-            Front-end Developer specializing in modern web technologies.
-          </p>
-          <Link
-            href="/contact"
-            className="bg-primary text-white px-6 py-2 rounded hover:bg-primaryDark transition-colors"
-          >
-            Contact Me
-          </Link>
-        </div>
       </div>
 
-      {/* Carousel Section */}
-      <div className="container mx-auto px-4 py-8">
+      {/* Projects Section */}
+      <div className="container mx-auto px-4 py-16 md:py-24">
         <Carousel />
       </div>
     </div>

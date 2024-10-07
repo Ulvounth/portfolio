@@ -23,6 +23,7 @@ export default function Projects() {
             image={project.image}
             github={project.github}
             live={project.live}
+            tags={project.tags}
           />
         ))}
       </div>

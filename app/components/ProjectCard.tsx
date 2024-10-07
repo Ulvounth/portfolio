@@ -9,6 +9,7 @@ interface ProjectProps {
   image: string;
   github: string;
   live?: string;
+  tags?: string[]; // Make tags optional
 }
 
 const ProjectCard: FC<ProjectProps> = ({
@@ -18,6 +19,7 @@ const ProjectCard: FC<ProjectProps> = ({
   image,
   github,
   live,
+  tags = [], // Provide a default empty array for tags
 }) => (
   <div className="bg-background p-2 border border-white border-solid rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:border-blue-500 flex flex-col">
     {/* Content Area */}
@@ -39,11 +41,24 @@ const ProjectCard: FC<ProjectProps> = ({
             <h2 className="text-xl font-semibold text-foreground">{title}</h2>
             <p className="text-gray-300 mt-2">{description}</p>
           </div>
+          {/* Render Tags */}
+          {tags.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-1 text-sm border text-white rounded"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </Link>
     </div>
     {/* Buttons */}
-    <div className="p-4 pt-0 flex justify-center space-x-4">
+    <div className="p-4 pt-0 flex  space-x-4">
       <a
         href={github}
         className="inline-block px-4 py-2 bg-primary text-white rounded hover:bg-primaryDark transition-colors"
