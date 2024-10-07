@@ -1,7 +1,6 @@
 // app/projects/page.tsx
 
 import ProjectCard from "../components/ProjectCard";
-
 import projects from "../../data/projects.json";
 
 export const metadata = {
@@ -20,7 +19,7 @@ export default function Projects() {
             id={project.id}
             title={project.title}
             description={project.description}
-            image={project.image}
+            image={project.images[0]} // Use the first image from the array
             github={project.github}
             live={project.live}
             tags={project.tags}

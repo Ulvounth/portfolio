@@ -14,7 +14,7 @@ import Link from "next/link";
 const Carousel = () => {
   return (
     <div className="w-full relative">
-      <h2 className="text-3xl font-bold  mb-10 ">Featured Projects</h2>
+      <h2 className="text-3xl font-bold mb-10">Featured Projects</h2>
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={30}
@@ -29,7 +29,7 @@ const Carousel = () => {
             <div className="flex flex-col items-center">
               <div className="relative w-full h-64 md:h-80 lg:h-96">
                 <Image
-                  src={project.image}
+                  src={project.images[0]} // Use the first image from the array
                   alt={project.title}
                   fill
                   style={{ objectFit: "contain" }}
