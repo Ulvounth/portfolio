@@ -7,7 +7,6 @@ const Footer = () => (
         &copy; {new Date().getFullYear()} Andreas Ulvund. All rights reserved.
       </p>
       <div className="mt-4 flex justify-center space-x-6">
-        {/* GitHub Icon */}
         <a
           href="https://github.com/Ulvounth"
           className="text-gray-400 hover:text-white"
@@ -16,7 +15,7 @@ const Footer = () => (
         >
           <FaGithub size={24} />
         </a>
-        {/* LinkedIn Icon */}
+
         <a
           href="https://www.linkedin.com/in/andreas-ulvund-98066376/"
           className="text-gray-400 hover:text-white"
@@ -25,9 +24,9 @@ const Footer = () => (
         >
           <FaLinkedin size={24} />
         </a>
-        {/* Facebook Icon */}
+
         <a
-          href="https://www.facebook.com/your-facebook"
+          href="https://www.facebook.com/andywolfdog"
           className="text-gray-400 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"

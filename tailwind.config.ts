@@ -1,6 +1,5 @@
-// tailwind.config.ts
-
 import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
 
 const config: Config = {
   content: [
@@ -12,19 +11,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#4C51BF", // A nice purple-blue color
-        primaryDark: "#434190", // Darker shade of purple-blue
+        primary: "#4C51BF",
+        primaryDark: "#434190",
         secondary: "#9333EA",
         secondaryDark: "#7E22CE",
-        background: "#1A202C", // Darker background color
-        foreground: "#E2E8F0", // Light foreground color
+        background: "#1A202C",
+        foreground: "#E2E8F0",
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],
       },
     },
   },
-  plugins: [],
+  plugins: [daisyui],
 };
 
 export default config;

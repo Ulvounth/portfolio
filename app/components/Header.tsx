@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const Header = () => {
@@ -10,16 +11,25 @@ const Header = () => {
     <header className=" bg-background sticky top-0 z-50">
       <nav className="container mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
         <div className="flex items-center">
-          <div className="text-2xl font-bold">
-            <Link href="/">Andreas</Link>
-          </div>
+          <Link href="/">
+            <div className="relative w-12 h-12">
+              <Image
+                src="/images/logo-new.webp"
+                alt="Logo"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: "cover" }}
+                className="rounded"
+              />
+            </div>
+          </Link>
         </div>
         <button
           className="text-gray-300 block md:hidden"
           onClick={() => setNavbarOpen(!navbarOpen)}
         >
           <svg
-            className="h-6 w-6"
+            className="h-8 w-8"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -42,7 +52,6 @@ const Header = () => {
           </svg>
         </button>
 
-        {/* Navigation Links */}
         <div
           className={`${
             navbarOpen ? "block" : "hidden"

@@ -1,16 +1,13 @@
+import React from "react";
+
 import ProjectCard from "../components/ProjectCard";
 import projects from "../../data/projects.json";
 
-export const metadata = {
-  title: "Projects | Andreas",
-  description: "Projects by Andreas.",
-};
-
-export default function Projects() {
+const Portfolio: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-12">Projects</h1>
-      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <h1 className="text-3xl font-semibold">Projects</h1>
+      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8">
         {projects.map((project) => (
           <ProjectCard
             key={project.id}
@@ -26,4 +23,6 @@ export default function Projects() {
       </div>
     </div>
   );
-}
+};
+
+export default Portfolio;
