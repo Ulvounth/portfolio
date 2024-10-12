@@ -16,16 +16,14 @@ export default function ProjectPage({
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
-      <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">
-        {project.title}
-      </h1>
+      <h1 className="text-4xl md:text-5xl font-bold mb-8">{project.title}</h1>
 
-      <div className="max-w-3xl mx-auto text-center mb-12">
+      <div className=" mx-auto mb-12">
         <p className="text-lg md:text-xl text-gray-300 mb-4">
           {project.description}
         </p>
 
-        <div className="flex justify-center space-x-2 mb-8">
+        <div className="flex space-x-2 mb-8">
           {project.tags.map((tag, index) => (
             <span
               key={index}
@@ -36,7 +34,7 @@ export default function ProjectPage({
           ))}
         </div>
 
-        <div className="flex justify-center space-x-4">
+        <div className="flex space-x-4">
           <a
             href={project.github}
             className="px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primaryDark transition-all"
@@ -58,7 +56,7 @@ export default function ProjectPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-screen-lg mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 ">
         {project.images.map((imgSrc, index) => (
           <div
             key={index}
