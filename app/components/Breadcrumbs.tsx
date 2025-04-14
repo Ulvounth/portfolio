@@ -4,20 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Breadcrumbs: React.FC = () => {
-  const pathname = usePathname(); // For App Router
+  const pathname = usePathname();
   const pathArray = pathname.split("/").filter((path) => path);
 
-  // Hide breadcrumbs on the home page
-  if (pathname === "/") {
-    return null; // Don't render breadcrumbs on home page
-  }
+  if (pathname === "/") return null;
 
   return (
-    <div className="container mx-auto px-4 py-4">
+    <nav aria-label="Breadcrumb" className="container mx-auto px-4 py-4">
       <div className="breadcrumbs text-sm py-4 text-foreground">
         <ul className="flex space-x-2">
           <li>
-            <Link href="/" className="hover:underline ">
+            <Link href="/" className="hover:underline">
               Home
             </Link>
           </li>
@@ -42,7 +39,7 @@ const Breadcrumbs: React.FC = () => {
           })}
         </ul>
       </div>
-    </div>
+    </nav>
   );
 };
 

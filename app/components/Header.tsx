@@ -34,6 +34,7 @@ const Header = () => {
         </div>
 
         <button
+          aria-label="Toggle navigation menu"
           className="text-gray-300 block md:hidden"
           onClick={toggleMobileMenu}
         >
