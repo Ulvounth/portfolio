@@ -5,7 +5,7 @@ import type { NextPage } from "next";
 
 export const metadata = {
   title: "About | Andreas",
-  description: "About Andreas.",
+  description: "About Andreas, a frontend and backend developer.",
 };
 
 const About: NextPage = () => {
@@ -31,21 +31,51 @@ const About: NextPage = () => {
 
         <div>
           <p className="text-foreground text-lg leading-relaxed">
-            Hi, I'm Andreas! I'm originally from Norway, but now living in Spain
+            Hi, I'm Andreas! Originally from Norway, I'm now living in Spain
             where I've been diving deep into front-end development. I recently
-            wrapped up my studies in front-end, mastering technologies like
+            wrapped up my studies in front-end, mastering technologies such as
             HTML, CSS, JavaScript, and React.
           </p>
           <p className="mt-4 text-foreground text-lg leading-relaxed">
-            Starting in October 2024, I'll be taking on a new challenge by
-            studying back-end development. I'm excited to expand my skills and
-            learn more about server-side technologies, databases, and APIs.
+            In October 2024, I started my journey into back-end development. So
+            far, I have learned:
+          </p>
+          <ul className="list-disc list-inside text-foreground text-lg leading-relaxed mt-2">
+            <li>Programming with Objects</li>
+            <li>JavaScript servers (Node.js, Express)</li>
+            <li>Databases (SQL, MongoDB)</li>
+          </ul>
+          <p className="mt-4 text-foreground text-lg leading-relaxed">
+            Soon, I'll expand my skills further by delving into REST APIs (which
+            I already know some of from my front-end studies) and server
+            deployment.
           </p>
           <p className="mt-4 text-foreground text-lg leading-relaxed">
-            Outside of coding, I'm passionate about technology and always keen
-            to explore the latest tools and gadgets. When I’m not at my desk,
-            you'll likely find me playing football, enjoying a round of golf, or
-            getting lost in a great video game.
+            I also recently completed a two-month internship at Frakt24. During
+            this internship, I helped design their new app using Figma and
+            gained hands-on experience with their codebase using Laravel and
+            PHP. Working with tools such as Jira, Google Meet, Google Chat, and
+            HubSpot, I gained valuable experience collaborating in a real-world
+            team environment.
+          </p>
+          <p className="mt-4 text-foreground text-lg leading-relaxed">
+            When I'm not coding, I'm passionate about technology and love
+            exploring the latest tools and gadgets. You'll often find me playing
+            football, enjoying a round of golf, or getting lost in a great video
+            game.
+          </p>
+          <p className="mt-4 text-foreground text-lg leading-relaxed">
+            For more information about my professional journey, feel free to
+            check out my{" "}
+            <a
+              href="https://www.linkedin.com/in/andreas-ulvund-98066376/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline"
+            >
+              LinkedIn profile
+            </a>
+            .
           </p>
         </div>
       </div>
