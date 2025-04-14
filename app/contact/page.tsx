@@ -18,6 +18,13 @@ const Contact: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const clearMessages = () => {
+    setTimeout(() => {
+      setSuccessMessage(null);
+      setErrorMessage(null);
+    }, 5000); // clear after 5 seconds
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -37,13 +44,16 @@ const Contact: React.FC = () => {
         setSuccessMessage("Your message was sent successfully!");
         setFormData({ name: "", email: "", message: "" });
       } else {
-        setErrorMessage("There was an error sending your message.");
+        setErrorMessage(
+          "There was an error sending your message. Please try again."
+        );
       }
     } catch (error) {
       console.error("Error during form submission:", error);
       setErrorMessage("An unexpected error occurred. Please try again later.");
     } finally {
       setLoading(false);
+      clearMessages();
     }
   };
 
@@ -68,7 +78,7 @@ const Contact: React.FC = () => {
                 href="mailto:ulvund_a@hotmail.com"
                 className="text-yellow-500 hover:underline"
               >
-                ulvund_a@hotmail.com
+                contact@andreasulvund.no
               </a>
             </li>
             <li className="mb-2">
@@ -81,7 +91,7 @@ const Contact: React.FC = () => {
               </a>
             </li>
             <li className="mb-2">
-              <strong>Location:</strong> Ciudad Quesada, Spain
+              <strong>Location:</strong> Benijófar, Spain
             </li>
           </ul>
 
@@ -112,9 +122,15 @@ const Contact: React.FC = () => {
 
         <div className="md:w-1/2">
           {successMessage && (
-            <p className="text-green-500 mb-4">{successMessage}</p>
+            <p role="alert" aria-live="polite" className="text-green-500 mb-4">
+              {successMessage}
+            </p>
           )}
-          {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+          {errorMessage && (
+            <p role="alert" aria-live="assertive" className="text-red-500 mb-4">
+              {errorMessage}
+            </p>
+          )}
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
