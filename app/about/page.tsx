@@ -3,6 +3,11 @@
 import Image from "next/image";
 import type { NextPage } from "next";
 
+export const metadata = {
+  title: "About | Andreas",
+  description: "About Andreas.",
+};
+
 const About: NextPage = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl flex flex-col justify-center items-center">
