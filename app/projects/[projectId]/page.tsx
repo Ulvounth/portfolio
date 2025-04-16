@@ -23,7 +23,7 @@ export default function ProjectPage({
           {project.description}
         </p>
 
-        <div className="flex space-x-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-8">
           {project.tags.map((tag, index) => (
             <span
               key={index}
