@@ -6,7 +6,7 @@ const skills = [
   { name: "CSS", src: "/skill-icons/icons8-css.svg" },
   { name: "JavaScript", src: "/skill-icons/icons8-javascript.svg" },
   { name: "React", src: "/skill-icons/icons8-react.svg" },
-  { name: "Next.js", src: "/skill-icons/icons8-nextjs.svg" },
+  { name: "Next.js", src: "/skill-icons/nextjs-icon-svgrepo-com.svg" },
   { name: "Tailwind", src: "/skill-icons/icons8-tailwind-css.svg" },
   { name: "Typescript", src: "/skill-icons/icons8-typescript-48.png" },
   { name: "Node.js", src: "/skill-icons/icons8-nodejs.svg" },
