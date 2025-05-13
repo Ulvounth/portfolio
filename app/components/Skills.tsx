@@ -17,6 +17,7 @@ const skills = [
   { name: "SQL", src: "/skill-icons/icons8-sql-48.png" },
   { name: "Express.js", src: "/skill-icons/icons8-express-js.svg" },
   { name: "MongoDB", src: "/skill-icons/icons8-mongodb.svg" },
+  { name: "REST API", src: "/skill-icons/icons8-rest-api.png" },
 ];
 
 const Skills: React.FC = () => {
