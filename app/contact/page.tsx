@@ -4,9 +4,9 @@ import ContactClient from "./ContactClient";
 
 // Define metadata for the Contact page using the Metadata API.
 export const metadata = {
-  title: "Contact | Andreas",
+  title: "Contact | Andreas Ulvund",
   description:
-    "Get in touch with Andreas, a Front-end Developer based in Spain.",
+    "Get in touch with Andreas Ulvund, a Frontend Developer based in Spain. Let's discuss your next project or collaboration opportunities.",
 };
 
 export default function ContactPage() {

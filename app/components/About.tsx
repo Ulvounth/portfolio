@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import CVDownload from "./CVDownload";
 
 const About: React.FC = () => {
   return (
@@ -17,12 +18,15 @@ const About: React.FC = () => {
             I implement user interface design and solve user problems with
             modern web technologies. Let&apos;s build something great together.
           </p>
-          <Link
-            href="/contact"
-            className="mt-4 bg-white text-background px-6 py-2 rounded-full hover:bg-primaryDark hover:text-white transition-colors w-max"
-          >
-            Contact Me
-          </Link>
+          <div className="flex flex-col sm:flex-row items-start gap-4 mt-4">
+            <Link
+              href="/contact"
+              className="bg-white text-background px-6 py-3 rounded-full hover:bg-primaryDark hover:text-white transition-colors text-center inline-flex items-center justify-center min-w-max"
+            >
+              Contact Me
+            </Link>
+            <CVDownload />
+          </div>
         </div>
 
         <div className="md:w-1/2 h-full flex items-center justify-center mt-8 md:mt-0">
