@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
@@ -12,6 +12,27 @@ const Header = () => {
   const toggleMobileMenu = () => {
     setNavbarOpen(!navbarOpen);
   };
+
+  // Handle escape key and body scroll
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && navbarOpen) {
+        setNavbarOpen(false);
+      }
+    };
+
+    if (navbarOpen) {
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", handleEscape);
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [navbarOpen]);
 
   const isActive = (href: string) => pathname === href;
 
@@ -35,7 +56,9 @@ const Header = () => {
 
         <button
           aria-label="Toggle navigation menu"
-          className="text-gray-300 block md:hidden"
+          aria-expanded={navbarOpen}
+          aria-controls="mobile-menu"
+          className="text-gray-300 block md:hidden z-50 relative"
           onClick={toggleMobileMenu}
         >
           <svg
@@ -62,13 +85,24 @@ const Header = () => {
           </svg>
         </button>
 
+        {/* Mobile Menu Overlay */}
+        {navbarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+            onClick={toggleMobileMenu}
+          />
+        )}
+
+        {/* Mobile Menu */}
         <div
-          className={`fixed top-0 right-0 h-full bg-gray-900 text-white w-1/2 transform transition-transform duration-300 ease-in-out ${
+          id="mobile-menu"
+          className={`fixed top-0 right-0 h-full bg-gray-900 text-white w-3/4 max-w-sm transform transition-transform duration-300 ease-in-out ${
             navbarOpen ? "translate-x-0" : "translate-x-full"
           } md:hidden z-50`}
         >
           <button
-            className="absolute top-4 right-4 text-white focus:outline-none"
+            aria-label="Close navigation menu"
+            className="absolute top-4 right-4 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900"
             onClick={toggleMobileMenu}
           >
             <svg
@@ -87,11 +121,11 @@ const Header = () => {
             </svg>
           </button>
 
-          <ul className="mt-12 space-y-6 px-6">
+          <ul className="mt-16 space-y-6 px-6">
             <li>
               <Link
                 href="/"
-                className={`block text-lg ${
+                className={`block text-lg hover:text-primary transition-colors ${
                   isActive("/") ? "border-b-2 border-primary" : ""
                 }`}
                 onClick={toggleMobileMenu}
@@ -102,7 +136,7 @@ const Header = () => {
             <li>
               <Link
                 href="/projects"
-                className={`block text-lg ${
+                className={`block text-lg hover:text-primary transition-colors ${
                   isActive("/projects") ? "border-b-2 border-primary" : ""
                 }`}
                 onClick={toggleMobileMenu}
@@ -113,7 +147,7 @@ const Header = () => {
             <li>
               <Link
                 href="/about"
-                className={`block text-lg ${
+                className={`block text-lg hover:text-primary transition-colors ${
                   isActive("/about") ? "border-b-2 border-primary" : ""
                 }`}
                 onClick={toggleMobileMenu}
@@ -124,7 +158,7 @@ const Header = () => {
             <li>
               <Link
                 href="/contact"
-                className={`block text-lg ${
+                className={`block text-lg hover:text-primary transition-colors ${
                   isActive("/contact") ? "border-b-2 border-primary" : ""
                 }`}
                 onClick={toggleMobileMenu}

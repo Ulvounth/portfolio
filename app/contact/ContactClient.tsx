@@ -28,6 +28,20 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setSuccessMessage(null);
+    setErrorMessage(null);
+
+    // Client-side validation
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.message.trim()
+    ) {
+      setErrorMessage("All fields are required");
+      setLoading(false);
+      clearMessages();
+      return;
+    }
 
     try {
       const response = await fetch("/api/contact", {
@@ -40,12 +54,13 @@ const Contact: React.FC = () => {
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok && result.success) {
         setSuccessMessage("Your message was sent successfully!");
         setFormData({ name: "", email: "", message: "" });
       } else {
         setErrorMessage(
-          "There was an error sending your message. Please try again."
+          result.message ||
+            "There was an error sending your message. Please try again."
         );
       }
     } catch (error) {
