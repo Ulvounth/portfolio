@@ -106,7 +106,7 @@ const Contact: React.FC = () => {
               </a>
             </li>
             <li className="mb-2">
-              <strong>Location:</strong> Benijófar, Spain
+              <strong>Location:</strong> Torrevieja, Spain
             </li>
           </ul>
 
