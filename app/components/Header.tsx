@@ -40,11 +40,11 @@ const Header = () => {
     <header className="bg-background sticky top-0 z-50">
       <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center">
-          <Link href="/">
+          <Link href="/" aria-label="Go to homepage">
             <div className="relative w-12 h-12">
               <Image
                 src="/images/logo-new.webp"
-                alt="Logo"
+                alt="Andreas Ulvund Portfolio Logo"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 style={{ objectFit: "cover" }}

@@ -22,16 +22,37 @@ const skills = [
 
 const Skills: React.FC = () => {
   return (
-    <section className=" container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-semibold">My Skills</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-8">
+    <section
+      className=" container mx-auto px-4 py-8"
+      aria-labelledby="skills-heading"
+    >
+      <h2 id="skills-heading" className="text-3xl font-semibold">
+        My Skills
+      </h2>
+      <div
+        className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-8"
+        role="list"
+        aria-label="Technical skills and technologies"
+      >
         {skills.map((skill) => (
           <div
             key={skill.name}
             className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
+            role="listitem"
           >
-            <Image src={skill.src} alt={skill.name} width={64} height={64} />
-            <p className="mt-4 font-semibold">{skill.name}</p>
+            <Image
+              src={skill.src}
+              alt={`${skill.name} technology logo`}
+              width={64}
+              height={64}
+              aria-hidden="true"
+            />
+            <p
+              className="mt-4 font-semibold"
+              aria-label={`Skilled in ${skill.name}`}
+            >
+              {skill.name}
+            </p>
           </div>
         ))}
       </div>

@@ -18,9 +18,10 @@ export default function CVDownload() {
   return (
     <button
       onClick={handleDownload}
-      className="inline-flex items-center justify-center space-x-2 bg-secondary text-white px-6 py-3 rounded-full hover:bg-secondaryDark transition-colors shadow-md w-max"
+      className="inline-flex items-center justify-center space-x-2 bg-secondary text-white px-6 py-3 rounded-full hover:bg-secondaryDark transition-colors shadow-md w-max focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      aria-label="Download Andreas Ulvund's CV as PDF file"
     >
-      <DocumentArrowDownIcon className="h-5 w-5" />
+      <DocumentArrowDownIcon className="h-5 w-5" aria-hidden="true" />
       <span>Download CV</span>
     </button>
   );

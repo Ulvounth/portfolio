@@ -22,6 +22,7 @@ const About: React.FC = () => {
             <Link
               href="/contact"
               className="bg-white text-background px-6 py-3 rounded-full hover:bg-primaryDark hover:text-white transition-colors text-center inline-flex items-center justify-center min-w-max"
+              aria-label="Go to contact page to get in touch with Andreas"
             >
               Contact Me
             </Link>
@@ -33,7 +34,7 @@ const About: React.FC = () => {
           <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden">
             <Image
               src="/images/andreas-bg.png"
-              alt="Andreas"
+              alt="Andreas Ulvund, Frontend Developer - Professional headshot photo"
               fill
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
               style={{ objectFit: "cover" }}

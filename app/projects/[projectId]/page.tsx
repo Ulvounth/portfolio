@@ -81,44 +81,53 @@ export default function ProjectPage({
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8">{project.title}</h1>
+      <header>
+        <h1 className="text-4xl md:text-5xl font-bold mb-8">{project.title}</h1>
+      </header>
 
       <div className="mx-auto mb-12">
         <p className="text-lg md:text-xl text-gray-300 mb-4">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div
+          className="flex flex-wrap gap-2 mb-8"
+          role="list"
+          aria-label="Technologies used in this project"
+        >
           {project.tags.map((tag, index) => (
             <span
               key={index}
               className="px-3 py-1 bg-gray-700 text-white rounded-full text-sm"
+              role="listitem"
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="flex space-x-4">
+        <nav className="flex space-x-4" aria-label="Project links">
           <a
             href={project.github}
-            className="px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primaryDark transition-all"
+            className="px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-primaryDark transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`View ${project.title} source code on GitHub (opens in new tab)`}
           >
             GitHub Repo
           </a>
           {project.live && (
             <a
               href={project.live}
-              className="px-6 py-3 bg-secondary text-white rounded-lg shadow-md hover:bg-secondaryDark transition-all"
+              className="px-6 py-3 bg-secondary text-white rounded-lg shadow-md hover:bg-secondaryDark transition-all focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`View ${project.title} live website (opens in new tab)`}
             >
               Live Site
             </a>
           )}
-        </div>
+        </nav>
       </div>
 
       {/* Replace plain image grid with the modal component */}
