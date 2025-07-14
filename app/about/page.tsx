@@ -4,8 +4,36 @@ import Image from "next/image";
 import type { NextPage } from "next";
 
 export const metadata = {
-  title: "About | Andreas",
-  description: "About Andreas, a frontend and backend developer.",
+  title: "About Andreas Ulvund - Frontend Developer Story",
+  description:
+    "Learn about Andreas Ulvund, a passionate Frontend Developer based in Spain. Discover my journey, skills in React, Next.js, TypeScript, and commitment to creating exceptional web experiences.",
+  keywords: [
+    "About Andreas Ulvund",
+    "Frontend Developer Spain",
+    "React Developer Story",
+    "Web Developer Background",
+    "TypeScript Developer Experience",
+    "Next.js Specialist",
+    "Developer Journey",
+  ],
+  openGraph: {
+    title: "About Andreas Ulvund - Frontend Developer Story",
+    description:
+      "Learn about Andreas Ulvund, a passionate Frontend Developer based in Spain specializing in React, Next.js, and TypeScript.",
+    url: "https://andreasulvund.no/about",
+    type: "profile",
+    images: [
+      {
+        url: "https://andreasulvund.no/images/andreas-bg.png",
+        width: 1200,
+        height: 630,
+        alt: "Andreas Ulvund - About Me",
+      },
+    ],
+  },
+  alternates: {
+    canonical: "https://andreasulvund.no/about",
+  },
 };
 
 const About: NextPage = () => {

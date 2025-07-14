@@ -1,6 +1,71 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import projects from "../../../data/projects.json";
 import ProjectImageModal from "@/app/components/ProjectImageModal";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { projectId: string };
+}): Promise<Metadata> {
+  const project = projects.find((p) => p.id === params.projectId);
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+      description: "The requested project could not be found.",
+    };
+  }
+
+  const projectImage =
+    project.images && project.images.length > 0
+      ? `https://andreasulvund.no${project.images[0]}`
+      : "https://andreasulvund.no/images/andreas-bg.png";
+
+  return {
+    title: `${project.title} - Andreas Ulvund Project`,
+    description: `${project.description} Built with ${project.tags.join(
+      ", "
+    )} by Andreas Ulvund, Frontend Developer.`,
+    keywords: [
+      project.title,
+      "Andreas Ulvund",
+      "Project Portfolio",
+      ...project.tags,
+      "Frontend Development",
+      "Web Development",
+    ],
+    openGraph: {
+      title: `${project.title} - Andreas Ulvund`,
+      description: project.description,
+      url: `https://andreasulvund.no/projects/${project.id}`,
+      type: "website",
+      images: [
+        {
+          url: projectImage,
+          width: 1200,
+          height: 630,
+          alt: `${project.title} - Andreas Ulvund Project`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} - Andreas Ulvund`,
+      description: project.description,
+      images: [projectImage],
+    },
+    alternates: {
+      canonical: `https://andreasulvund.no/projects/${project.id}`,
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  return projects.map((project) => ({
+    projectId: project.id,
+  }));
+}
 
 export default function ProjectPage({
   params,
