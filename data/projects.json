@@ -41,14 +41,14 @@
   {
     "id": "4",
     "title": "Casa Sueño",
-    "description": "Casa Sueño is a modern, user-friendly booking website for a holiday apartment in Spain. The site features a clean design, dynamic availability calendar and secure booking system. This project is still in progress and will be further refined.",
+    "description": "Casa Sueño is a modern, user-friendly booking website for a holiday apartment in Spain. The site features a clean design, dynamic availability calendar with real-time booking management, secure payment integration, and a comprehensive admin dashboard. Built with Next.js 15, TypeScript, and Supabase for seamless performance and data management.",
     "images": [
-      "/images/casasueno-1.png",
-      "/images/casasueno-2.png",
-      "/images/casasueno-3.png"
+      "/images/casasueno-1.webp",
+      "/images/casasueno-2-modal.webp",
+      "/images/casasueno-3.webp"
     ],
     "github": "https://github.com/Ulvounth/casa-sueno",
-    "live": "https://casa-sueno.vercel.app/",
+    "live": "https://casa-sueno.com/en",
     "tags": ["Next.js", "Tailwind CSS", "TypeScript", "Supabase"]
   }
 ]

@@ -4,22 +4,25 @@ import Image from "next/image";
 import type { NextPage } from "next";
 
 export const metadata = {
-  title: "About Andreas Ulvund - Frontend Developer Story",
+  title: "About Andreas Ulvund - Full-Stack Developer Story",
   description:
-    "Learn about Andreas Ulvund, a passionate Frontend Developer based in Spain. Discover my journey, skills in React, Next.js, TypeScript, and commitment to creating exceptional web experiences.",
+    "Learn about Andreas Ulvund, a Full-Stack Developer based in Spain. Completed Backend Development Year 1 at Noroff, specializing in React, Next.js, TypeScript, Node.js, Express, and databases. Frontend expert expanding into backend technologies.",
   keywords: [
     "About Andreas Ulvund",
-    "Frontend Developer Spain",
+    "Full-Stack Developer Spain",
+    "Backend Development Student",
     "React Developer Story",
-    "Web Developer Background",
+    "Node.js Developer",
     "TypeScript Developer Experience",
     "Next.js Specialist",
     "Developer Journey",
+    "Noroff Graduate",
+    "Express.js Developer",
   ],
   openGraph: {
-    title: "About Andreas Ulvund - Frontend Developer Story",
+    title: "About Andreas Ulvund - Full-Stack Developer Story",
     description:
-      "Learn about Andreas Ulvund, a passionate Frontend Developer based in Spain specializing in React, Next.js, and TypeScript.",
+      "Learn about Andreas Ulvund, a Full-Stack Developer based in Spain. Completed Backend Development Year 1, specializing in React, Next.js, TypeScript, Node.js, and databases.",
     url: "https://andreasulvund.no/about",
     type: "profile",
     images: [
@@ -59,47 +62,45 @@ const About: NextPage = () => {
 
         <div>
           <p className="text-foreground text-lg leading-relaxed">
-            Hi, I'm Andreas! Originally from Norway, I'm now living in Spain
-            where I've been diving deep into front-end development. I recently
-            wrapped up my studies in front-end, mastering technologies such as
-            HTML, CSS, JavaScript, and React.
+            Hi, I'm Andreas! I'm originally from Norway but currently living in
+            Spain, where I'm building my career as a full-stack developer. After
+            completing my front-end studies in 2024, I've gained solid
+            experience with HTML, CSS, JavaScript, React, TypeScript, and
+            Next.js.
           </p>
           <p className="mt-4 text-foreground text-lg leading-relaxed">
-            In October 2024, I started my journey into back-end development. So
-            far, I have learned:
+            I just finished my first year of Backend Development at Noroff, and
+            I'm now heading into year two. Here's what I covered in year one:
           </p>
-          <ul className="list-disc list-inside text-foreground text-lg leading-relaxed mt-2">
+          <ul className="list-disc list-inside text-foreground text-lg leading-relaxed mt-2 ml-4">
+            <li>Programming Foundations</li>
+            <li>Front-End Technologies</li>
             <li>Programming with Objects</li>
-            <li>JavaScript servers (Node.js, Express)</li>
+            <li>Project Methodology</li>
+            <li>JavaScript Servers (Node.js, Express)</li>
             <li>Databases (SQL, MongoDB)</li>
+            <li>REST APIs</li>
+            <li>Server Deployment</li>
           </ul>
           <p className="mt-4 text-foreground text-lg leading-relaxed">
-            Soon, I'll expand my skills further by delving into REST APIs (which
-            I already know some of from my front-end studies) and server
-            deployment.
+            Between October and December 2024, I did a two-month internship at
+            Frakt24. I got to work on designing their new app in Figma and dove
+            into their codebase with Laravel and PHP. It was a great experience
+            working with a real team, using tools like Jira, Google Meet, and
+            HubSpot daily.
           </p>
           <p className="mt-4 text-foreground text-lg leading-relaxed">
-            I also recently completed a two-month internship at Frakt24. During
-            this internship, I helped design their new app using Figma and
-            gained hands-on experience with their codebase using Laravel and
-            PHP. Working with tools such as Jira, Google Meet, Google Chat, and
-            HubSpot, I gained valuable experience collaborating in a real-world
-            team environment.
+            When I'm not coding, I'm usually checking out the latest tech and
+            gadgets. I also love playing football, hitting the golf course, or
+            diving into a good video game.
           </p>
           <p className="mt-4 text-foreground text-lg leading-relaxed">
-            When I'm not coding, I'm passionate about technology and love
-            exploring the latest tools and gadgets. You'll often find me playing
-            football, enjoying a round of golf, or getting lost in a great video
-            game.
-          </p>
-          <p className="mt-4 text-foreground text-lg leading-relaxed">
-            For more information about my professional journey, feel free to
-            check out my{" "}
+            Want to know more about my work experience? Check out my{" "}
             <a
               href="https://www.linkedin.com/in/andreas-ulvund-98066376/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary underline"
+              className="text-primary underline hover:text-primaryDark transition-colors"
             >
               LinkedIn profile
             </a>

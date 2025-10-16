@@ -7,7 +7,12 @@ const rateLimit = new Map();
 export function middleware(request: NextRequest) {
   // Only apply rate limiting to contact API
   if (request.nextUrl.pathname === "/api/contact") {
-    const ip = request.ip || "127.0.0.1";
+    // Get IP from headers (Next.js 15 removed request.ip)
+    const forwarded = request.headers.get("x-forwarded-for");
+    const ip = forwarded
+      ? forwarded.split(",")[0]
+      : request.headers.get("x-real-ip") || "127.0.0.1";
+
     const now = Date.now();
     const windowMs = 60 * 1000; // 1 minute
     const max = 5; // 5 requests per minute
@@ -22,7 +27,10 @@ export function middleware(request: NextRequest) {
         data.count++;
         if (data.count > max) {
           return NextResponse.json(
-            { success: false, message: "Too many requests. Please try again later." },
+            {
+              success: false,
+              message: "Too many requests. Please try again later.",
+            },
             { status: 429 }
           );
         }

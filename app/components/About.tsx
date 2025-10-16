@@ -12,11 +12,12 @@ const About: React.FC = () => {
             ANDREAS ULVUND
           </h1>
           <h2 className="text-xl md:text-4xl font-semibold">
-            FRONTEND DEVELOPER
+            FULL-STACK DEVELOPER
           </h2>
           <p className="text-base md:text-lg text-gray-300 max-w-md">
-            I implement user interface design and solve user problems with
-            modern web technologies. Let&apos;s build something great together.
+            I build modern web applications from front-end to back-end, solving
+            user problems with cutting-edge technologies. Let&apos;s build
+            something great together.
           </p>
           <div className="flex flex-col sm:flex-row items-start gap-4 mt-4">
             <Link
@@ -34,7 +35,7 @@ const About: React.FC = () => {
           <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden">
             <Image
               src="/images/andreas-bg.png"
-              alt="Andreas Ulvund, Frontend Developer - Professional headshot photo"
+              alt="Andreas Ulvund, Full-Stack Developer - Professional headshot photo"
               fill
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
               style={{ objectFit: "cover" }}

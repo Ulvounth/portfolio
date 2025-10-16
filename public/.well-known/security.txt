@@ -1,0 +1,4 @@
+Contact: mailto:andreas.ulvund@hotmail.com
+Expires: 2026-10-16T00:00:00.000Z
+Preferred-Languages: en, no
+Canonical: https://andreasulvund.no/.well-known/security.txt

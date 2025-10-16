@@ -63,7 +63,7 @@ const ProjectImageModal: React.FC<ProjectImageModalProps> = ({
       {/* Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
@@ -75,20 +75,26 @@ const ProjectImageModal: React.FC<ProjectImageModalProps> = ({
           }}
           tabIndex={-1}
         >
-          <div className="relative" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h2 id="modal-title" className="sr-only">
               Enlarged view of {title} screenshot
             </h2>
-            <Image
-              src={selectedImage}
-              alt={`Enlarged view of ${title} screenshot showing detailed application interface`}
-              width={1200}
-              height={800}
-              className="rounded shadow-lg"
-            />
+            <div className="relative w-full h-full">
+              <Image
+                src={selectedImage}
+                alt={`Enlarged view of ${title} screenshot showing detailed application interface`}
+                fill
+                className="rounded shadow-lg"
+                style={{ objectFit: "contain" }}
+                sizes="90vw"
+              />
+            </div>
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-black bg-white rounded-full p-2 shadow hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="absolute top-2 right-2 text-black bg-white rounded-full p-2 shadow hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 z-10"
               aria-label="Close enlarged screenshot view"
               autoFocus
             >

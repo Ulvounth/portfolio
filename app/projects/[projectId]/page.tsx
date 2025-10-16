@@ -3,12 +3,15 @@ import { Metadata } from "next";
 import projects from "../../../data/projects.json";
 import ProjectImageModal from "@/app/components/ProjectImageModal";
 
+type PageProps = {
+  params: Promise<{ projectId: string }>;
+};
+
 export async function generateMetadata({
   params,
-}: {
-  params: { projectId: string };
-}): Promise<Metadata> {
-  const project = projects.find((p) => p.id === params.projectId);
+}: PageProps): Promise<Metadata> {
+  const { projectId } = await params;
+  const project = projects.find((p) => p.id === projectId);
 
   if (!project) {
     return {
@@ -67,12 +70,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ProjectPage({
-  params,
-}: {
-  params: { projectId: string };
-}) {
-  const { projectId } = params;
+export default async function ProjectPage({ params }: PageProps) {
+  const { projectId } = await params;
   const project = projects.find((p) => p.id === projectId);
 
   if (!project) {

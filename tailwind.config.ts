@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import daisyui from "daisyui";
 
 const config: Config = {
   content: [
@@ -23,7 +22,14 @@ const config: Config = {
       },
     },
   },
-  plugins: [daisyui],
+  plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("daisyui"),
+  ],
+  daisyui: {
+    themes: false, // Use our custom dark theme instead
+    logs: false,
+  },
 };
 
 export default config;
