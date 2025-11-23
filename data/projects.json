@@ -50,5 +50,25 @@
     "github": "https://github.com/Ulvounth/casa-sueno",
     "live": "https://casa-sueno.com/en",
     "tags": ["Next.js", "Tailwind CSS", "TypeScript", "Supabase"]
+  },
+  {
+    "id": "5",
+    "title": "GolfAssistant",
+    "description": "A comprehensive digital golf assistant that helps players track rounds, manage their handicap, and compete with friends. Features include automatic WHS handicap calculation based on registered rounds, a competitive leaderboard system, complete round history with performance tracking, and multi-player support. Built with React, TypeScript, and Tailwind CSS on the frontend, powered by Node.js and Express backend with AWS Lambda serverless deployment, DynamoDB for data storage, and JWT authentication.",
+    "images": [
+      "/images/golfassistant-home.png",
+      "/images/golfassistant-dashboard.png",
+      "/images/golfassistant-courses.png"
+    ],
+    "github": "https://github.com/Ulvounth/golfassistant",
+    "live": "https://golfassistant.vercel.app/",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Node.js",
+      "AWS Lambda",
+      "DynamoDB"
+    ]
   }
 ]
