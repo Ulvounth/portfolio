@@ -21,7 +21,7 @@ const ProjectCard: FC<ProjectProps> = ({
   live,
   tags = [],
 }) => (
-  <article className="bg-background p-2 border border-white border-solid rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:border-blue-500 flex flex-col">
+  <article className="bg-background p-2 border border-white border-solid rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:border-blue-500 flex flex-col h-full">
     <div className="flex-grow">
       <Link
         href={`/projects/${id}`}
@@ -29,7 +29,7 @@ const ProjectCard: FC<ProjectProps> = ({
         aria-label={`View details for ${title} project`}
       >
         <div className="p-4">
-          <div className="relative w-full h-48 md:h-64 lg:h-72">
+          <div className="relative w-full h-48 md:h-64 lg:h-72 mb-4">
             <Image
               src={image}
               alt={`Screenshot of ${title} project showing the main interface and design`}
@@ -41,7 +41,7 @@ const ProjectCard: FC<ProjectProps> = ({
           </div>
           <div>
             <h2 className="text-xl font-semibold text-foreground">{title}</h2>
-            <p className="text-gray-300 mt-2">{description}</p>
+            <p className="text-gray-300 mt-2 line-clamp-3">{description}</p>
           </div>
 
           {tags.length > 0 && (
