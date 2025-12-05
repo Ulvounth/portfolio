@@ -5,10 +5,10 @@ import { DocumentArrowDownIcon } from "@heroicons/react/24/outline";
 export default function CVDownload() {
   const handleDownload = () => {
     // You can replace this with your actual CV file path
-    const cvUrl = "/cv/Andreas_Ulvund_CV.pdf";
+    const cvUrl = "/cv/CV_Andreas_ES.pdf";
     const link = document.createElement("a");
     link.href = cvUrl;
-    link.download = "Andreas_Ulvund_CV.pdf";
+    link.download = "CV_Andreas_ES.pdf";
     link.target = "_blank";
     document.body.appendChild(link);
     link.click();
