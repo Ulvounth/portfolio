@@ -4,12 +4,12 @@ import Image from "next/image";
 import type { NextPage } from "next";
 
 export const metadata = {
-  title: "About Andreas Ulvund - Full-Stack Developer Story",
+  title: "About Andreas Ulvund - Junior Web Developer Story",
   description:
-    "Learn about Andreas Ulvund, a Full-Stack Developer based in Spain. Completed Backend Development Year 1 at Noroff, specializing in React, Next.js, TypeScript, Node.js, Express, and databases. Frontend expert expanding into backend technologies.",
+    "Learn about Andreas Ulvund, a Junior Web Developer based in Spain. Completed Backend Development Year 1 at Noroff, specializing in React, Next.js, TypeScript, Node.js, Express, and databases. Frontend expert expanding into backend technologies.",
   keywords: [
-    "About Andreas Ulvund",
-    "Full-Stack Developer Spain",
+    "Andreas Ulvund",
+    "Junior Web Developer Spain",
     "Backend Development Student",
     "React Developer Story",
     "Node.js Developer",
@@ -20,9 +20,9 @@ export const metadata = {
     "Express.js Developer",
   ],
   openGraph: {
-    title: "About Andreas Ulvund - Full-Stack Developer Story",
+    title: "About Andreas Ulvund - Junior Web Developer Story",
     description:
-      "Learn about Andreas Ulvund, a Full-Stack Developer based in Spain. Completed Backend Development Year 1, specializing in React, Next.js, TypeScript, Node.js, and databases.",
+      "Learn about Andreas Ulvund, a Junior Web Developer based in Spain. Completed Backend Development Year 1, specializing in React, Next.js, TypeScript, Node.js, and databases.",
     url: "https://andreasulvund.no/about",
     type: "profile",
     images: [

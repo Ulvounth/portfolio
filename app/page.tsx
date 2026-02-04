@@ -20,13 +20,13 @@ const Experience = dynamic(() => import("./components/Experience"), {
 });
 
 export const metadata = {
-  title: "Andreas Ulvund Portfolio - Full-Stack Developer",
+  title: "Andreas Ulvund Portfolio - Junior Web Developer",
   description:
-    "Welcome to Andreas Ulvund's portfolio - Full-Stack Developer specializing in React, Next.js, TypeScript, Node.js, and databases. Based in Spain, creating modern web applications from front-end to back-end with clean code and great user experience. View my projects, skills, and contact information.",
+    "Welcome to Andreas Ulvund's portfolio - Junior Web Developer specializing in React, Next.js, TypeScript, Node.js, and databases. Based in Spain, creating modern web applications from front-end to back-end with clean code and great user experience. View my projects, skills, and contact information.",
   keywords: [
     "Andreas Ulvund Portfolio",
     "Andreas Ulvund",
-    "Full-Stack Developer",
+    "Junior Web Developer",
     "Frontend Developer",
     "Backend Developer",
     "React Developer",
@@ -40,9 +40,9 @@ export const metadata = {
     "Full Stack Developer",
   ],
   openGraph: {
-    title: "Andreas Ulvund Portfolio - Full-Stack Developer",
+    title: "Andreas Ulvund Portfolio - Junior Web Developer",
     description:
-      "Welcome to Andreas Ulvund's portfolio. Full-Stack Developer specializing in React, Next.js, TypeScript, Node.js, and databases. Based in Spain, creating modern web applications with exceptional user experiences.",
+      "Welcome to Andreas Ulvund's portfolio. Junior Web Developer specializing in React, Next.js, TypeScript, Node.js, and databases. Based in Spain, creating modern web applications with exceptional user experiences.",
     url: "https://andreasulvund.no",
     type: "website",
     images: [
@@ -50,15 +50,15 @@ export const metadata = {
         url: "https://andreasulvund.no/images/andreas-bg.png",
         width: 1200,
         height: 630,
-        alt: "Andreas Ulvund Portfolio - Full-Stack Developer",
+        alt: "Andreas Ulvund Portfolio - Junior Web Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Andreas Ulvund Portfolio - Full-Stack Developer",
+    title: "Andreas Ulvund Portfolio - Junior Web Developer",
     description:
-      "Full-Stack Developer Portfolio specializing in React, Next.js, TypeScript, Node.js, and databases. Based in Spain.",
+      "Junior Web Developer Portfolio specializing in React, Next.js, TypeScript, Node.js, and databases. Based in Spain.",
     images: ["https://andreasulvund.no/images/andreas-bg.png"],
   },
   alternates: {

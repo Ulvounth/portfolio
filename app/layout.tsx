@@ -2,33 +2,34 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Breadcrumbs from "./components/Breadcrumbs";
+import ChatBot from "./components/ChatBot";
 import Script from "next/script";
 
 export const metadata = {
   title: {
-    default: "Andreas Ulvund - Frontend Developer Portfolio",
+    default: "Andreas Ulvund - Junior Web Developer Portfolio",
     template: "%s | Andreas Ulvund",
   },
   description:
-    "Andreas Ulvund - Experienced Frontend Developer specializing in React, Next.js, and TypeScript. Based in Spain, creating modern, performant web applications with exceptional user experiences.",
+    "Andreas Ulvund - Junior Web Developer specializing in React, Next.js, and TypeScript. Based in Spain, creating modern, performant web applications with exceptional user experiences.",
   keywords: [
     "Andreas Ulvund",
+    "Junior Web Developer",
     "Frontend Developer",
     "React Developer",
     "Next.js Developer",
     "TypeScript Developer",
     "Web Developer Spain",
     "JavaScript Developer",
-    "Full Stack Developer",
     "Modern Web Development",
     "Portfolio",
   ],
   authors: [{ name: "Andreas Ulvund", url: "https://andreasulvund.no" }],
   creator: "Andreas Ulvund",
   openGraph: {
-    title: "Andreas Ulvund - Frontend Developer Portfolio",
+    title: "Andreas Ulvund - Junior Web Developer Portfolio",
     description:
-      "Experienced Frontend Developer specializing in React, Next.js, and TypeScript. Creating modern web applications in Spain.",
+      "Junior Web Developer specializing in React, Next.js, and TypeScript. Creating modern web applications in Spain.",
     url: "https://andreasulvund.no",
     siteName: "Andreas Ulvund Portfolio",
     images: [
@@ -36,7 +37,7 @@ export const metadata = {
         url: "https://andreasulvund.no/images/andreas-bg.png",
         width: 1200,
         height: 630,
-        alt: "Andreas Ulvund - Frontend Developer",
+        alt: "Andreas Ulvund - Junior Web Developer",
       },
     ],
     locale: "en_US",
@@ -44,9 +45,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Andreas Ulvund - Frontend Developer Portfolio",
+    title: "Andreas Ulvund - Junior Web Developer Portfolio",
     description:
-      "Experienced Frontend Developer specializing in React, Next.js, and TypeScript. Based in Spain.",
+      "Junior Web Developer specializing in React, Next.js, and TypeScript. Based in Spain.",
     images: ["https://andreasulvund.no/images/andreas-bg.png"],
     creator: "@andreasulvund",
   },
@@ -78,9 +79,9 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Andreas Ulvund",
-    jobTitle: "Frontend Developer",
+    jobTitle: "Junior Web Developer",
     description:
-      "Experienced Frontend Developer specializing in React, Next.js, and TypeScript",
+      "Junior Web Developer specializing in React, Next.js, and TypeScript",
     url: "https://andreasulvund.no",
     image: "https://andreasulvund.no/images/andreas-bg.png",
     address: {
@@ -126,6 +127,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ChatBot />
       </body>
     </html>
   );

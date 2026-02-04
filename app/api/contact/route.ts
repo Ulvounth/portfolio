@@ -3,9 +3,22 @@ import { Resend } from "resend";
 // Rate limiting map
 const rateLimit = new Map();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Sjekk om Resend API key er satt
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export async function POST(request: Request) {
+  // Sjekk om Resend er konfigurert
+  if (!resend || !resendApiKey) {
+    return NextResponse.json(
+      {
+        error:
+          "Email service not configured. Please contact directly via LinkedIn or GitHub.",
+      },
+      { status: 503 },
+    );
+  }
+
   // Rate limiting
   // Get IP from headers (Next.js 15 removed request.ip)
   const forwarded = request.headers.get("x-forwarded-for");
@@ -31,7 +44,7 @@ export async function POST(request: Request) {
             success: false,
             message: "Too many requests. Please try again later.",
           },
-          { status: 429 }
+          { status: 429 },
         );
       }
     }
@@ -43,7 +56,7 @@ export async function POST(request: Request) {
     if (!name || !email || !message) {
       return NextResponse.json(
         { success: false, message: "All fields are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -53,7 +66,7 @@ export async function POST(request: Request) {
           success: false,
           message: "Name must be between 2 and 100 characters",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -63,7 +76,7 @@ export async function POST(request: Request) {
           success: false,
           message: "Message must be between 10 and 1000 characters",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -72,7 +85,7 @@ export async function POST(request: Request) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { success: false, message: "Please enter a valid email address" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -99,14 +112,14 @@ export async function POST(request: Request) {
       console.error("Error sending email:", error);
       return NextResponse.json(
         { success: false, message: "Failed to send email" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json(
       { success: false, message: "Invalid request" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }

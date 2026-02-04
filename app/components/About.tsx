@@ -12,7 +12,7 @@ const About: React.FC = () => {
             ANDREAS ULVUND
           </h1>
           <h2 className="text-xl md:text-4xl font-semibold">
-            FULL-STACK DEVELOPER
+            JUNIOR WEB DEVELOPER
           </h2>
           <p className="text-base md:text-lg text-gray-300 max-w-md">
             I build modern web applications from front-end to back-end, solving
@@ -35,7 +35,7 @@ const About: React.FC = () => {
           <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden">
             <Image
               src="/images/andreas-bg.png"
-              alt="Andreas Ulvund, Full-Stack Developer - Professional headshot photo"
+              alt="Andreas Ulvund, Junior Web Developer - Professional headshot photo"
               fill
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
               style={{ objectFit: "cover" }}
