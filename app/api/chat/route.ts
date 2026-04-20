@@ -68,10 +68,10 @@ export async function POST(req: Request) {
       }
       // Tillat kun 'user' og 'assistant' roller – blokkerer system-prompt injection
       if (!allowedRoles.includes(msg.role)) {
-        return new Response(
-          JSON.stringify({ error: "Invalid message role" }),
-          { status: 400, headers: { "Content-Type": "application/json" } },
-        );
+        return new Response(JSON.stringify({ error: "Invalid message role" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        });
       }
       // Begrens lengden på hver melding
       if (msg.content.length > 2000) {
