@@ -11,17 +11,9 @@ export async function POST(req: Request) {
     const identifier = getClientIdentifier(req);
     const rateLimitResult = rateLimit(identifier, 5, 30 * 1000);
 
-    // Debug logging
-    console.log(
-      `Rate limit for ${identifier}: ${rateLimitResult.remaining} remaining`,
-    );
-
     if (!rateLimitResult.success) {
       const resetIn = Math.ceil(
         (rateLimitResult.resetTime - Date.now()) / 1000,
-      );
-      console.log(
-        `Rate limit exceeded for ${identifier}. Reset in ${resetIn}s`,
       );
       return new Response(
         JSON.stringify({
@@ -66,10 +58,18 @@ export async function POST(req: Request) {
     }
 
     // Valider at hver melding har riktig format
+    const allowedRoles = ["user", "assistant"];
     for (const msg of messages) {
       if (!msg.role || !msg.content || typeof msg.content !== "string") {
         return new Response(
           JSON.stringify({ error: "Invalid message format" }),
+          { status: 400, headers: { "Content-Type": "application/json" } },
+        );
+      }
+      // Tillat kun 'user' og 'assistant' roller – blokkerer system-prompt injection
+      if (!allowedRoles.includes(msg.role)) {
+        return new Response(
+          JSON.stringify({ error: "Invalid message role" }),
           { status: 400, headers: { "Content-Type": "application/json" } },
         );
       }
