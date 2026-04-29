@@ -32,13 +32,18 @@ const About: React.FC = () => {
         </div>
 
         <div className="md:w-1/2 h-full flex items-center justify-center mt-8 md:mt-0">
-          <div className="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden">
+          <div
+            className="relative w-56 md:w-72 lg:w-80"
+            style={{ aspectRatio: "3/4" }}
+          >
             <Image
-              src="/images/andreas-bg.png"
-              alt="Andreas Ulvund, Junior Web Developer - Professional headshot photo"
+              src="/images/andypic3.png"
+              alt="Andreas Ulvund, Junior Web Developer - Professional photo"
               fill
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 80vw, 50vw"
+              style={{ objectFit: "cover", objectPosition: "top center" }}
+              className="rounded-full shadow-2xl"
+              quality={100}
               priority
             />
           </div>
