@@ -1,14 +1,16 @@
 import { FaLinkedin, FaGithub, FaFacebook } from "react-icons/fa";
+import { site } from "@/data/site";
 
 const Footer = () => (
   <footer className="text-gray-300 border-t">
     <div className="container mx-auto px-4 py-6 text-center">
       <p>
-        &copy; {new Date().getFullYear()} Andreas Ulvund. All rights reserved.
+        &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
       </p>
       <div className="mt-4 flex justify-center space-x-6">
         <a
-          href="https://github.com/Ulvounth"
+          href={site.social.github}
+          aria-label="GitHub (opens in new tab)"
           className="text-gray-400 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"
@@ -17,7 +19,8 @@ const Footer = () => (
         </a>
 
         <a
-          href="https://www.linkedin.com/in/andreas-ulvund-98066376/"
+          href={site.social.linkedin}
+          aria-label="LinkedIn (opens in new tab)"
           className="text-gray-400 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"
@@ -26,7 +29,8 @@ const Footer = () => (
         </a>
 
         <a
-          href="https://www.facebook.com/andywolfdog"
+          href={site.social.facebook}
+          aria-label="Facebook (opens in new tab)"
           className="text-gray-400 hover:text-white"
           target="_blank"
           rel="noopener noreferrer"

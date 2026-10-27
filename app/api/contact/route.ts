@@ -1,125 +1,81 @@
-import { NextResponse } from "next/server";
 import { Resend } from "resend";
-// Rate limiting map
-const rateLimit = new Map();
+import { site } from "@/data/site";
+import { validateContact } from "@/lib/contact";
+import {
+  createRateLimiter,
+  getClientIdentifier,
+  rateLimitHeaders,
+} from "@/lib/server/rate-limit";
+import { readJson, RequestError } from "@/lib/server/request";
 
-// Sjekk om Resend API key er satt
-const resendApiKey = process.env.RESEND_API_KEY;
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
+const limitContact = createRateLimiter(5, 60_000);
 
 export async function POST(request: Request) {
-  // Sjekk om Resend er konfigurert
-  if (!resend || !resendApiKey) {
-    return NextResponse.json(
-      {
-        error:
-          "Email service not configured. Please contact directly via LinkedIn or GitHub.",
-      },
-      { status: 503 },
+  const limit = limitContact(getClientIdentifier(request));
+  if (!limit.success) {
+    return Response.json(
+      { success: false, message: "Too many requests. Please try again later." },
+      { status: 429, headers: rateLimitHeaders(limit) },
     );
   }
-
-  // Rate limiting
-  // Get IP from headers (Next.js 15 removed request.ip)
-  const forwarded = request.headers.get("x-forwarded-for");
-  const ip = forwarded
-    ? forwarded.split(",")[0]
-    : request.headers.get("x-real-ip") || "127.0.0.1";
-
-  const now = Date.now();
-  const windowMs = 60 * 1000; // 1 minute
-  const max = 5; // 5 requests per minute
-
-  if (!rateLimit.has(ip)) {
-    rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
-  } else {
-    const data = rateLimit.get(ip);
-    if (now > data.resetTime) {
-      rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
-    } else {
-      data.count++;
-      if (data.count > max) {
-        return NextResponse.json(
-          {
-            success: false,
-            message: "Too many requests. Please try again later.",
-          },
-          { status: 429 },
-        );
-      }
-    }
-  }
   try {
-    const { name, email, message } = await request.json();
-
-    // Input validation
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { success: false, message: "All fields are required" },
+    const input = validateContact(await readJson(request, 16_384));
+    if (!input.success)
+      return Response.json(
+        { success: false, message: input.error },
         { status: 400 },
       );
-    }
-
-    if (name.length < 2 || name.length > 100) {
-      return NextResponse.json(
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return Response.json(
         {
           success: false,
-          message: "Name must be between 2 and 100 characters",
+          message:
+            "Email is temporarily unavailable. Please use the email address or LinkedIn link on this page.",
         },
-        { status: 400 },
+        { status: 503 },
       );
     }
-
-    if (message.length < 10 || message.length > 1000) {
-      return NextResponse.json(
+    const { name, email, message } = input.data;
+    const { data, error } = await new Resend(apiKey).emails.send({
+      from: process.env.EMAIL_FROM || `noreply@${new URL(site.url).hostname}`,
+      to: process.env.EMAIL_TO || site.email,
+      replyTo: email,
+      subject: `Portfolio inquiry from ${name}`,
+      // Plain text preserves the visitor's message without interpreting submitted HTML.
+      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+    });
+    if (error || !data?.id) {
+      console.error(
+        "Contact email rejected:",
+        error?.name || "No delivery result",
+      );
+      return Response.json(
         {
           success: false,
-          message: "Message must be between 10 and 1000 characters",
+          message: "Your message could not be sent. Please try again later.",
         },
-        { status: 400 },
+        { status: 502 },
       );
     }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { success: false, message: "Please enter a valid email address" },
-        { status: 400 },
-      );
-    }
-
-    const fromEmail = process.env.EMAIL_FROM || "noreply@andreasulvund.no";
-    const toEmail = process.env.EMAIL_TO || "contact@andreasulvund.no";
-
-    const mailOptions = {
-      from: fromEmail,
-      to: toEmail,
-      subject: `New Contact Form Submission from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      html: `<p><strong>Name:</strong> ${name}</p>
-           <p><strong>Email:</strong> ${email}</p>
-           <p><strong>Message:</strong> ${message}</p>`,
-    };
-
-    try {
-      await resend.emails.send(mailOptions);
-      return NextResponse.json({
-        success: true,
-        message: "Email sent successfully!",
-      });
-    } catch (error) {
-      console.error("Error sending email:", error);
-      return NextResponse.json(
-        { success: false, message: "Failed to send email" },
-        { status: 500 },
-      );
-    }
+    return Response.json({
+      success: true,
+      message: "Your message was sent successfully!",
+    });
   } catch (error) {
-    console.error("Error processing request:", error);
-    return NextResponse.json(
-      { success: false, message: "Invalid request" },
-      { status: 400 },
+    if (error instanceof RequestError) {
+      return Response.json(
+        { success: false, message: error.message },
+        { status: error.status },
+      );
+    }
+    console.error("Contact email request failed");
+    return Response.json(
+      {
+        success: false,
+        message: "Your message could not be sent. Please try again later.",
+      },
+      { status: 502 },
     );
   }
 }

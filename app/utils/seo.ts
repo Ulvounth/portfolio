@@ -1,90 +1,42 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { absoluteUrl, site } from "@/data/site";
 
 interface SEOProps {
   title: string;
   description: string;
+  path?: string;
+  image?: string;
   keywords?: string[];
-  ogImage?: string;
-  canonicalUrl?: string;
-  noIndex?: boolean;
+  // For titles that already contain the site name and must skip the layout template.
+  absoluteTitle?: boolean;
 }
 
+// Let the root layout apply the title template exactly once.
 export function generateSEO({
   title,
   description,
-  keywords = [],
-  ogImage = "/images/andreas-bg.png",
-  canonicalUrl,
-  noIndex = false,
+  path = "/",
+  image = site.image,
+  keywords,
+  absoluteTitle = false,
 }: SEOProps): Metadata {
-  const siteName = "Andreas Ulvund Portfolio";
-  const siteUrl = "https://andreasulvund.no";
-  const fullTitle = `${title} | ${siteName}`;
-  const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
-
+  const url = absoluteUrl(path);
+  // Image dimensions vary (project screenshots), so leave them for crawlers to read.
+  const images = [{ url: absoluteUrl(image), alt: title }];
   return {
-    title: fullTitle,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
-    keywords: keywords.join(", "),
-    authors: [{ name: "Andreas Ulvund", url: siteUrl }],
-    creator: "Andreas Ulvund",
-    metadataBase: new URL(siteUrl),
-    alternates: {
-      canonical: canonicalUrl || siteUrl,
-    },
-    robots: {
-      index: !noIndex,
-      follow: !noIndex,
-      googleBot: {
-        index: !noIndex,
-        follow: !noIndex,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
+    keywords,
+    alternates: { canonical: url },
     openGraph: {
-      title: fullTitle,
+      title,
       description,
-      url: canonicalUrl || siteUrl,
-      siteName,
-      images: [
-        {
-          url: fullOgImage,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-      locale: "en_US",
+      url,
+      siteName: `${site.name} Portfolio`,
+      images,
       type: "website",
+      locale: "en_US",
     },
-    twitter: {
-      card: "summary_large_image",
-      title: fullTitle,
-      description,
-      images: [fullOgImage],
-      creator: "@andreasulvund",
-    },
-    verification: {
-      google: "googlef288ab6595c59e39",
-      yandex: "your-yandex-verification-code",
-    },
-    category: "technology",
+    twitter: { card: "summary_large_image", title, description, images },
   };
 }
-
-// Common keywords for your portfolio
-export const commonKeywords = [
-  "Andreas Ulvund",
-  "Frontend Developer",
-  "React Developer",
-  "Next.js Developer",
-  "TypeScript",
-  "JavaScript",
-  "Web Development",
-  "Portfolio",
-  "Spain",
-  "Noroff",
-  "Full Stack Developer",
-];

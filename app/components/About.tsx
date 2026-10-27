@@ -1,9 +1,8 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import CVDownload from "./CVDownload";
 
-const About: React.FC = () => {
+export default function About() {
   return (
     <div className="bg-background text-foreground">
       <div className="container mx-auto my-16 px-4 py-16 md:py-24 lg:py-32 flex flex-col md:flex-row items-center">
@@ -15,9 +14,13 @@ const About: React.FC = () => {
             JUNIOR WEB DEVELOPER
           </h2>
           <p className="text-base md:text-lg text-gray-300 max-w-md">
-            I build modern web applications from front-end to back-end, solving
-            user problems with cutting-edge technologies. Let&apos;s build
-            something great together.
+            I build modern web applications from front-end to back-end. Having
+            completed my front-end and backend studies at Noroff, I&apos;m now
+            looking for a developer role.
+          </p>
+          <p className="text-base md:text-lg text-gray-300 max-w-md">
+            Alongside my job search, I&apos;m exploring practical uses of AI and
+            context engineering through independent learning.
           </p>
           <div className="flex flex-col sm:flex-row items-start gap-4 mt-4">
             <Link
@@ -51,6 +54,4 @@ const About: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default About;
+}

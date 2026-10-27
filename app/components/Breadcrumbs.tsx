@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getProject } from "@/data/projects";
+import { navigation } from "@/data/site";
 
-const Breadcrumbs: React.FC = () => {
+export default function Breadcrumbs() {
   const pathname = usePathname();
   const pathArray = pathname.split("/").filter((path) => path);
 
@@ -23,15 +25,20 @@ const Breadcrumbs: React.FC = () => {
             const href = "/" + pathArray.slice(0, index + 1).join("/");
 
             return (
-              <li key={index} className="flex items-center space-x-2">
-                <span>/</span>
+              <li key={href} className="flex items-center space-x-2">
+                <span aria-hidden="true">/</span>
                 {isLast ? (
-                  <span className="text-gray-400">
-                    {path.charAt(0).toUpperCase() + path.slice(1)}
+                  <span className="text-gray-400" aria-current="page">
+                    {navigation.find((item) => item.href === href)?.label ||
+                      (pathArray[0] === "projects"
+                        ? getProject(path)?.title
+                        : undefined) ||
+                      path}
                   </span>
                 ) : (
                   <Link href={href} className="hover:underline text-primary">
-                    {path.charAt(0).toUpperCase() + path.slice(1)}
+                    {navigation.find((item) => item.href === href)?.label ||
+                      path}
                   </Link>
                 )}
               </li>
@@ -41,6 +48,4 @@ const Breadcrumbs: React.FC = () => {
       </div>
     </nav>
   );
-};
-
-export default Breadcrumbs;
+}

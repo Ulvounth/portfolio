@@ -1,15 +1,15 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { site } from "@/data/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Andreas Ulvund - Frontend Developer Portfolio",
-    short_name: "Andreas Ulvund",
-    description:
-      "Frontend developer specializing in React, Next.js, and TypeScript. View my portfolio of web development projects and get in touch.",
+    name: `${site.name} - ${site.title} Portfolio`,
+    short_name: site.name,
+    description: site.description,
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0a",
-    theme_color: "#3b82f6",
+    background_color: "#1A202C",
+    theme_color: "#9333EA",
     orientation: "portrait-primary",
     icons: [
       {

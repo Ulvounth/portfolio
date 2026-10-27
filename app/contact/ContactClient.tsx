@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { contactLimits, validateContact } from "@/lib/contact";
+import { site } from "@/data/site";
 
-const Contact: React.FC = () => {
+export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,33 +15,23 @@ const Contact: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((previous) => ({ ...previous, [name]: value }));
   };
 
-  const clearMessages = () => {
-    setTimeout(() => {
-      setSuccessMessage(null);
-      setErrorMessage(null);
-    }, 5000); // clear after 5 seconds
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     setSuccessMessage(null);
     setErrorMessage(null);
 
-    // Client-side validation
-    if (
-      !formData.name.trim() ||
-      !formData.email.trim() ||
-      !formData.message.trim()
-    ) {
-      setErrorMessage("All fields are required");
+    const input = validateContact(formData);
+    if (!input.success) {
+      setErrorMessage(input.error);
       setLoading(false);
-      clearMessages();
       return;
     }
 
@@ -49,18 +41,19 @@ const Contact: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(input.data),
+        signal: AbortSignal.timeout(15000),
       });
 
-      const result = await response.json();
+      const result = await response.json().catch(() => null);
 
-      if (response.ok && result.success) {
+      if (response.ok && result?.success) {
         setSuccessMessage("Your message was sent successfully!");
         setFormData({ name: "", email: "", message: "" });
       } else {
         setErrorMessage(
-          result.message ||
-            "There was an error sending your message. Please try again."
+          result?.message ||
+            "There was an error sending your message. Please try again.",
         );
       }
     } catch (error) {
@@ -68,7 +61,6 @@ const Contact: React.FC = () => {
       setErrorMessage("An unexpected error occurred. Please try again later.");
     } finally {
       setLoading(false);
-      clearMessages();
     }
   };
 
@@ -92,25 +84,25 @@ const Contact: React.FC = () => {
             <div className="mb-2">
               <strong>Email:</strong>{" "}
               <a
-                href="mailto:contact@andreasulvund.no"
+                href={`mailto:${site.email}`}
                 className="text-yellow-500 hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded"
                 aria-label="Send email to Andreas"
               >
-                contact@andreasulvund.no
+                {site.email}
               </a>
             </div>
             <div className="mb-2">
               <strong>Phone:</strong>{" "}
               <a
-                href="tel:+4798643191"
+                href={`tel:${site.phone}`}
                 className="text-yellow-500 hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded"
                 aria-label="Call Andreas at +47 98 64 31 91"
               >
-                +47 98 64 31 91
+                {site.phoneDisplay}
               </a>
             </div>
             <div className="mb-2">
-              <strong>Location:</strong> Torrevieja, Spain
+              <strong>Location:</strong> {site.location}
             </div>
           </address>
 
@@ -120,7 +112,7 @@ const Contact: React.FC = () => {
             </h3>
             <nav className="flex space-x-4" aria-label="Social media links">
               <a
-                href="https://github.com/Ulvounth"
+                href={site.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:bg-gray-700 border hover:text-white border-primary px-2 py-1 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -129,7 +121,7 @@ const Contact: React.FC = () => {
                 GitHub
               </a>
               <a
-                href="https://www.linkedin.com/in/andreas-ulvund-98066376/"
+                href={site.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-secondary hover:bg-gray-700 hover:text-white border border-secondary px-2 py-1 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -144,9 +136,8 @@ const Contact: React.FC = () => {
         <div className="md:w-1/2">
           {successMessage && (
             <div
-              role="alert"
-              aria-live="polite"
-              className="text-green-500 mb-4 p-3 bg-green-100 rounded border border-green-300"
+              role="status"
+              className="text-green-800 mb-4 p-3 bg-green-100 rounded border border-green-300"
             >
               {successMessage}
             </div>
@@ -155,7 +146,7 @@ const Contact: React.FC = () => {
             <div
               role="alert"
               aria-live="assertive"
-              className="text-red-500 mb-4 p-3 bg-red-100 rounded border border-red-300"
+              className="text-red-800 mb-4 p-3 bg-red-100 rounded border border-red-300"
             >
               {errorMessage}
             </div>
@@ -180,6 +171,10 @@ const Contact: React.FC = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full border border-gray-600 bg-background p-2 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
+                autoComplete="name"
+                minLength={contactLimits.name.min}
+                maxLength={contactLimits.name.max}
+                disabled={loading}
                 placeholder="Your Name"
                 required
                 aria-describedby="name-help"
@@ -202,6 +197,9 @@ const Contact: React.FC = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full border border-gray-600 bg-background p-2 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
+                autoComplete="email"
+                maxLength={contactLimits.email.max}
+                disabled={loading}
                 placeholder="Your Email"
                 required
                 aria-describedby="email-help"
@@ -223,6 +221,9 @@ const Contact: React.FC = () => {
                 value={formData.message}
                 onChange={handleChange}
                 className="w-full border border-gray-600 bg-background p-2 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-500 h-32 text-foreground"
+                minLength={contactLimits.message.min}
+                maxLength={contactLimits.message.max}
+                disabled={loading}
                 placeholder="Your Message"
                 required
                 aria-describedby="message-help"
@@ -251,6 +252,4 @@ const Contact: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default Contact;
+}

@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Optimize for SEO and performance
-  compress: true,
   poweredByHeader: false,
 
   // Enable experimental features for better performance
@@ -51,15 +49,12 @@ const nextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
+            value: "public, max-age=86400, must-revalidate",
           },
         ],
       },
     ];
   },
-
-  // Generate sitemap automatically
-  trailingSlash: false,
 };
 
 export default nextConfig;

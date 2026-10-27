@@ -1,122 +1,51 @@
 import "./globals.css";
+import type { Metadata } from "next";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Breadcrumbs from "./components/Breadcrumbs";
 import ChatBot from "./components/ChatBot";
-import Script from "next/script";
+import { generateSEO } from "./utils/seo";
+import { absoluteUrl, site } from "@/data/site";
+import { skills } from "@/data/skills";
 
-export const metadata = {
+export const metadata: Metadata = {
+  ...generateSEO({
+    title: `${site.name} Portfolio`,
+    description: site.description,
+  }),
   title: {
-    default: "Andreas Ulvund - Junior Web Developer Portfolio",
-    template: "%s | Andreas Ulvund",
+    default: `${site.name} – ${site.title}`,
+    template: `%s | ${site.name}`,
   },
-  description:
-    "Andreas Ulvund - Junior Web Developer specializing in React, Next.js, and TypeScript. Based in Spain, creating modern, performant web applications with exceptional user experiences.",
-  keywords: [
-    "Andreas Ulvund",
-    "Junior Web Developer",
-    "Frontend Developer",
-    "React Developer",
-    "Next.js Developer",
-    "TypeScript Developer",
-    "Web Developer Spain",
-    "JavaScript Developer",
-    "Modern Web Development",
-    "Portfolio",
-  ],
-  authors: [{ name: "Andreas Ulvund", url: "https://andreasulvund.no" }],
-  creator: "Andreas Ulvund",
-  openGraph: {
-    title: "Andreas Ulvund - Junior Web Developer Portfolio",
-    description:
-      "Junior Web Developer specializing in React, Next.js, and TypeScript. Creating modern web applications in Spain.",
-    url: "https://andreasulvund.no",
-    siteName: "Andreas Ulvund Portfolio",
-    images: [
-      {
-        url: "https://andreasulvund.no/images/andreas-bg.png",
-        width: 1200,
-        height: 630,
-        alt: "Andreas Ulvund - Junior Web Developer",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Andreas Ulvund - Junior Web Developer Portfolio",
-    description:
-      "Junior Web Developer specializing in React, Next.js, and TypeScript. Based in Spain.",
-    images: ["https://andreasulvund.no/images/andreas-bg.png"],
-    creator: "@andreasulvund",
-  },
-  alternates: {
-    canonical: "https://andreasulvund.no",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  verification: {
-    google: "f288ab6595c59e39",
-  },
+  metadataBase: new URL(site.url),
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  verification: { google: "f288ab6595c59e39" },
 };
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Andreas Ulvund",
-    jobTitle: "Junior Web Developer",
-    description:
-      "Junior Web Developer specializing in React, Next.js, and TypeScript",
-    url: "https://andreasulvund.no",
-    image: "https://andreasulvund.no/images/andreas-bg.png",
-    address: {
-      "@type": "Place",
-      addressCountry: "Spain",
-    },
-    knowsAbout: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "JavaScript",
-      "HTML",
-      "CSS",
-      "Tailwind CSS",
-      "Frontend Development",
-      "Web Development",
-    ],
-    sameAs: [
-      "https://github.com/Ulvounth",
-      "https://www.linkedin.com/in/andreas-ulvund-98066376/",
-    ],
-    worksFor: {
-      "@type": "Organization",
-      name: "Freelance",
-    },
+    name: site.name,
+    jobTitle: site.title,
+    description: site.description,
+    url: site.url,
+    image: absoluteUrl(site.image),
+    address: { "@type": "PostalAddress", addressCountry: "ES" },
+    knowsAbout: skills.map((skill) => skill.name),
+    sameAs: [site.social.github, site.social.linkedin],
   };
-
   return (
     <html lang="en">
       <body className="antialiased flex flex-col min-h-screen bg-background text-foreground">
-        <Script
-          id="structured-data"
+        <script
           type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
         />
         <a href="#main-content" className="skip-link">
           Skip to main content

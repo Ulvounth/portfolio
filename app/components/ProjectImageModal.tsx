@@ -1,110 +1,64 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import Dialog from "./Dialog";
 
-interface ProjectImageModalProps {
-  images: string[];
-  title: string;
-}
-
-const ProjectImageModal: React.FC<ProjectImageModalProps> = ({
+export default function ProjectImageModal({
   images,
   title,
-}) => {
+}: {
+  images: readonly string[];
+  title: string;
+}) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const openModal = (image: string) => {
-    setSelectedImage(image);
-  };
-
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
-
+  const dialogRef = useRef<HTMLDialogElement>(null);
   return (
-    <div>
-      {/* Screenshot grid */}
-      <div
+    <>
+      <ul
         className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-        role="list"
         aria-label={`Screenshots of ${title} project`}
       >
-        {images.map((imgSrc, index) => (
-          <div
-            key={index}
-            className="relative w-full h-64 sm:h-80 rounded-lg overflow-hidden shadow-lg cursor-pointer"
-            onClick={() => openModal(imgSrc)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                openModal(imgSrc);
-              }
-            }}
-            tabIndex={0}
-            role="button"
-            aria-label={`View enlarged screenshot ${index + 1} of ${title}`}
-          >
+        {images.map((src, index) => (
+          <li key={src}>
+            <button
+              type="button"
+              className="relative block w-full h-64 sm:h-80 rounded-lg overflow-hidden shadow-lg"
+              onClick={() => {
+                setSelectedImage(src);
+                dialogRef.current?.showModal();
+              }}
+              aria-label={`View enlarged screenshot ${index + 1} of ${title}`}
+            >
+              <Image
+                src={src}
+                alt={`${title} screenshot ${index + 1}`}
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <Dialog
+        dialogRef={dialogRef}
+        label={`${title} screenshot`}
+        onClose={() => setSelectedImage(null)}
+        className="fixed inset-0 m-auto h-[90dvh] max-h-none w-[95vw] max-w-7xl bg-transparent p-0 backdrop:bg-black/90"
+      >
+        {selectedImage && (
+          <div className="relative h-full w-full">
             <Image
-              src={imgSrc}
-              alt={`${title} screenshot ${
-                index + 1
-              } - shows the user interface and key features of the application`}
+              src={selectedImage}
+              alt={`Enlarged ${title} screenshot`}
               fill
-              style={{ objectFit: "cover" }}
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="transition-transform duration-300 ease-in-out hover:scale-105"
-              priority
+              className="object-contain"
+              sizes="95vw"
             />
           </div>
-        ))}
-      </div>
-
-      {/* Modal */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
-          onClick={closeModal}
-          onKeyDown={(e) => {
-            if (e.key === "Escape") {
-              closeModal();
-            }
-          }}
-          tabIndex={-1}
-        >
-          <div
-            className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 id="modal-title" className="sr-only">
-              Enlarged view of {title} screenshot
-            </h2>
-            <div className="relative w-full h-full">
-              <Image
-                src={selectedImage}
-                alt={`Enlarged view of ${title} screenshot showing detailed application interface`}
-                fill
-                className="rounded shadow-lg"
-                style={{ objectFit: "contain" }}
-                sizes="90vw"
-              />
-            </div>
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-black bg-white rounded-full p-2 shadow hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 z-10"
-              aria-label="Close enlarged screenshot view"
-              autoFocus
-            >
-              &times;
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </Dialog>
+    </>
   );
-};
-
-export default ProjectImageModal;
+}

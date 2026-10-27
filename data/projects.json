@@ -13,19 +13,6 @@
     "tags": ["Next.js", "TypeScript", "Tailwind CSS"]
   },
   {
-    "id": "2",
-    "title": "React E-Commerce Store",
-    "description": "This project is a dynamic e-commerce store developed using React with Vite and TypeScript, showcasing a modern, responsive design styled with styled-components. It features a robust e-commerce functionality set, including product listings, an advanced cart system, checkout process, and contact form validation.",
-    "images": [
-      "/images/javascript-frameworks.png",
-      "/images/javascript-frameworks-2.png",
-      "/images/javascript-frameworks-3.png"
-    ],
-    "github": "https://github.com/Ulvounth/Javascript-Frameworks-CA",
-    "live": "https://infnity-goods.netlify.app/",
-    "tags": ["React", "Vite", "TypeScript", "Styled-Components"]
-  },
-  {
     "id": "3",
     "title": "Auction Website",
     "description": "This was my second year semester project at Noroff. Develop an engaging front-end application for an auction website where users can register, log in, update avatars, view credits, create listings, and bid on items. Leverages the Noroff API for backend functionality, ensuring a seamless user experience for both registered and unregistered users.",
@@ -37,19 +24,6 @@
     "github": "https://github.com/Ulvounth/Semester-Project-2",
     "live": "https://bidbazaarr.netlify.app/",
     "tags": ["HTML", "Bootstrap", "Sass", "JavaScript"]
-  },
-  {
-    "id": "4",
-    "title": "Casa Sueño",
-    "description": "Casa Sueño is a modern, user-friendly booking website for a holiday apartment in Spain. The site features a clean design, dynamic availability calendar with real-time booking management, secure payment integration, and a comprehensive admin dashboard. Built with Next.js 15, TypeScript, and Supabase for seamless performance and data management.",
-    "images": [
-      "/images/casasueno-1.webp",
-      "/images/casasueno-2-modal.webp",
-      "/images/casasueno-3.webp"
-    ],
-    "github": "https://github.com/Ulvounth/casa-sueno",
-    "live": "https://casa-sueno.com/en",
-    "tags": ["Next.js", "Tailwind CSS", "TypeScript", "Supabase"]
   },
   {
     "id": "5",
