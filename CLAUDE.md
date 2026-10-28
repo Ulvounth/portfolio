@@ -44,7 +44,7 @@ Never invent biographical facts: dates, courses, certifications, employers or AI
 
 ## Git
 
-Work on a branch named `phase-N-<name>` (or `fix/...`). Never commit to `main` directly. Small commits with clear messages. Do not push or open a PR unless asked.
+Work directly on `main`. Do not create branches or PRs. Ask before every commit, and show what will be committed. Small commits with clear messages. Do not push unless asked.
 
 ## Context discipline
 

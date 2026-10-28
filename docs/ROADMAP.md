@@ -5,9 +5,9 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 ## How to work with this file
 
 1. Start each phase in a **new conversation** (`/clear`): "Read docs/ROADMAP.md and do phase N. Start in plan mode."
-2. Approve the plan first, then implement on a branch named `phase-N-<name>`.
+2. Approve the plan first, then implement directly on `main` (no branches or PRs, ask before committing).
 3. Done means `npm run check` and `npm run build` pass (and `npm run test:e2e` from F1 onwards). For UI changes, compare before/after screenshots.
-4. At the end of the session, tick the phase below, write a handover note and commit.
+4. At the end of the session, tick the phase below, write a handover note and ask before committing.
 5. Aim for 100–200k tokens per session. Check with `/context`. Past roughly 200k, finish the current subtask, write the handover note, commit and start a new conversation. Avoid `/compact` mid-phase.
 
 ## Order of work
