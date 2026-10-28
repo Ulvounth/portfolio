@@ -1,5 +1,5 @@
 import Groq from "groq-sdk";
-import { validateChat } from "@/lib/chat";
+import { chatLimits, validateChat } from "@/lib/chat";
 import { systemPrompt } from "@/lib/server/chat-prompt";
 import {
   createRateLimiter,
@@ -8,11 +8,17 @@ import {
 } from "@/lib/server/rate-limit";
 import { readJson, RequestError } from "@/lib/server/request";
 
-const limitChat = createRateLimiter(5, 30_000);
+const limitChat = createRateLimiter(5, 30_000, "chat");
+const day = 24 * 60 * 60 * 1000;
+// A per-client daily budget keeps one visitor from using up the shared one below.
+const limitChatClientDaily = createRateLimiter(40, day, "chat-client-daily");
+// One shared budget for all visitors, so a distributed flood cannot run up the AI bill.
+const limitChatDaily = createRateLimiter(300, day, "chat-daily");
 const unavailable = "Chatten er midlertidig utilgjengelig. Prøv igjen senere.";
 
 export async function POST(request: Request) {
-  const limit = limitChat(getClientIdentifier(request));
+  const client = getClientIdentifier(request);
+  const limit = await limitChat(client);
   if (!limit.success) {
     return Response.json(
       { error: "For mange forespørsler. Prøv igjen om litt." },
@@ -20,7 +26,9 @@ export async function POST(request: Request) {
     );
   }
   try {
-    const messages = validateChat(await readJson(request, 700_000));
+    const messages = validateChat(
+      await readJson(request, chatLimits.bodyBytes),
+    );
     if (!messages)
       return Response.json(
         { error: "Ugyldig samtale eller for lange meldinger." },
@@ -28,6 +36,25 @@ export async function POST(request: Request) {
       );
     const apiKey = process.env.GROQ_API_KEY;
     if (!apiKey) return Response.json({ error: unavailable }, { status: 503 });
+    // The client budget is checked first so a blocked client never spends the shared one.
+    const clientDaily = await limitChatClientDaily(client);
+    if (!clientDaily.success)
+      return Response.json(
+        {
+          error:
+            "You have reached the daily chat limit. Please try again tomorrow.",
+        },
+        { status: 429, headers: rateLimitHeaders(clientDaily) },
+      );
+    const daily = await limitChatDaily("global");
+    if (!daily.success)
+      return Response.json(
+        {
+          error:
+            "The chat has reached its daily limit. Please try again tomorrow.",
+        },
+        { status: 429, headers: rateLimitHeaders(daily) },
+      );
     const groq = new Groq({ apiKey, timeout: 30_000, maxRetries: 1 });
     const model = process.env.GROQ_MODEL?.trim() || "openai/gpt-oss-120b";
     const stream = await groq.chat.completions.create(

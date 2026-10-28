@@ -1,7 +1,17 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import { contactLimits, validateContact } from "@/lib/contact";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
+import {
+  contactHoneypotField,
+  contactLimits,
+  validateContact,
+} from "@/lib/contact";
 import { site } from "@/data/site";
 
 export default function Contact() {
@@ -10,6 +20,12 @@ export default function Contact() {
     email: "",
     message: "",
   });
+  // Hidden field that only bots fill in. Real visitors never see it.
+  const [honeypot, setHoneypot] = useState("");
+  const startedAt = useRef(0);
+  useEffect(() => {
+    startedAt.current = performance.now();
+  }, []);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -41,7 +57,11 @@ export default function Contact() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(input.data),
+        body: JSON.stringify({
+          ...input.data,
+          [contactHoneypotField]: honeypot,
+          elapsedMs: Math.round(performance.now() - startedAt.current),
+        }),
         signal: AbortSignal.timeout(15000),
       });
 
@@ -50,6 +70,7 @@ export default function Contact() {
       if (response.ok && result?.success) {
         setSuccessMessage("Your message was sent successfully!");
         setFormData({ name: "", email: "", message: "" });
+        startedAt.current = performance.now();
       } else {
         setErrorMessage(
           result?.message ||
@@ -231,6 +252,20 @@ export default function Contact() {
               <div id="message-help" className="sr-only">
                 Enter your message or inquiry
               </div>
+            </div>
+            <div aria-hidden="true" className="absolute -left-[10000px]">
+              <label htmlFor={contactHoneypotField}>
+                Leave this field empty
+              </label>
+              <input
+                type="text"
+                id={contactHoneypotField}
+                name={contactHoneypotField}
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+              />
             </div>
             <button
               type="submit"

@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import { site } from "@/data/site";
-import { validateContact } from "@/lib/contact";
+import { checkContactBot, validateContact } from "@/lib/contact";
 import {
   createRateLimiter,
   getClientIdentifier,
@@ -8,10 +8,10 @@ import {
 } from "@/lib/server/rate-limit";
 import { readJson, RequestError } from "@/lib/server/request";
 
-const limitContact = createRateLimiter(5, 60_000);
+const limitContact = createRateLimiter(5, 60_000, "contact");
 
 export async function POST(request: Request) {
-  const limit = limitContact(getClientIdentifier(request));
+  const limit = await limitContact(getClientIdentifier(request));
   if (!limit.success) {
     return Response.json(
       { success: false, message: "Too many requests. Please try again later." },
@@ -19,10 +19,31 @@ export async function POST(request: Request) {
     );
   }
   try {
-    const input = validateContact(await readJson(request, 16_384));
+    const body = await readJson(request, 16_384);
+    const input = validateContact(body);
     if (!input.success)
       return Response.json(
         { success: false, message: input.error },
+        { status: 400 },
+      );
+    const bot = checkContactBot(body);
+    // Autofill can fill the honeypot for a real visitor, so never report success
+    // for a message that was dropped. Point them to the email address instead.
+    if (bot === "honeypot")
+      return Response.json(
+        {
+          success: false,
+          message:
+            "Your message could not be sent. Please use the email address on this page.",
+        },
+        { status: 400 },
+      );
+    if (bot === "too-fast")
+      return Response.json(
+        {
+          success: false,
+          message: "That was very fast. Please wait a moment and try again.",
+        },
         { status: 400 },
       );
     const apiKey = process.env.RESEND_API_KEY;

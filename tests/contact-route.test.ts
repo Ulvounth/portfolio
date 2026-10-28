@@ -12,6 +12,8 @@ const valid = {
   name: "Visitor",
   email: "visitor@example.com",
   message: "I'd like to discuss a developer opportunity.",
+  ref_code: "",
+  elapsedMs: 60_000,
 };
 let client = 0;
 function request(input: unknown = valid) {
@@ -37,6 +39,25 @@ describe("contact API", () => {
   });
   it("validates input before calling the email provider", async () => {
     expect((await POST(request({ ...valid, name: {} }))).status).toBe(400);
+    expect(send).not.toHaveBeenCalled();
+  });
+  it("never reports success for a submission that fills the honeypot field", async () => {
+    const response = await POST(request({ ...valid, ref_code: "autofilled" }));
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({
+      success: false,
+      message: expect.stringContaining("email address"),
+    });
+    expect(send).not.toHaveBeenCalled();
+  });
+  it.each([
+    ["too fast", { elapsedMs: 100 }],
+    ["with a negative duration", { elapsedMs: -5 }],
+    ["without a duration", { elapsedMs: undefined }],
+    ["with a non-numeric duration", { elapsedMs: "60000" }],
+  ])("rejects submissions sent %s", async (_, override) => {
+    const response = await POST(request({ ...valid, ...override }));
+    expect(response.status).toBe(400);
     expect(send).not.toHaveBeenCalled();
   });
   it("returns an actionable error if email is not configured", async () => {

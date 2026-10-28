@@ -21,6 +21,11 @@ export default defineConfig({
     timeout: 240_000,
     // Empty keys keep the e2e run from emailing or calling the AI API, even
     // when a local .env file has real values (existing variables win over .env).
-    env: { RESEND_API_KEY: "", GROQ_API_KEY: "" },
+    env: {
+      RESEND_API_KEY: "",
+      GROQ_API_KEY: "",
+      UPSTASH_REDIS_REST_URL: "",
+      UPSTASH_REDIS_REST_TOKEN: "",
+    },
   },
 });

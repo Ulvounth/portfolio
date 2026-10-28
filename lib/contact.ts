@@ -4,6 +4,31 @@ export const contactLimits = {
   message: { min: 10, max: 1000 },
 } as const;
 
+// Real visitors need a few seconds to write a message. Scripts post immediately.
+export const contactMinFillMs = 3000;
+
+export type BotCheck = "ok" | "honeypot" | "too-fast";
+
+// The field name avoids words like "website" that autofill tends to fill in.
+export const contactHoneypotField = "ref_code";
+
+/**
+ * Checks the hidden honeypot field and how long the form was open. The client
+ * sends a duration, not a timestamp, so clock differences do not matter. Both
+ * values come from the client, so this only stops scripts that do not read the form.
+ */
+export function checkContactBot(input: unknown): BotCheck {
+  const fields = (input ?? {}) as Record<string, unknown>;
+  const honeypot = fields[contactHoneypotField];
+  if (typeof honeypot === "string" && honeypot.trim()) return "honeypot";
+  if (
+    typeof fields.elapsedMs !== "number" ||
+    fields.elapsedMs < contactMinFillMs
+  )
+    return "too-fast";
+  return "ok";
+}
+
 export interface ContactInput {
   name: string;
   email: string;

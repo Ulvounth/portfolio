@@ -14,6 +14,20 @@ vi.mock("groq-sdk", () => ({
     chat = { completions: { create: provider.create } };
   },
 }));
+const redis = vi.hoisted(() => ({ exec: vi.fn() }));
+vi.mock("@upstash/redis", () => ({
+  Redis: class {
+    multi() {
+      const transaction = {
+        incr: () => transaction,
+        pexpire: () => transaction,
+        pttl: () => transaction,
+        ...redis,
+      };
+      return transaction;
+    }
+  },
+}));
 import { POST } from "@/app/api/chat/route";
 
 let client = 0;
@@ -49,6 +63,31 @@ describe("chat API", () => {
         )
       ).status,
     ).toBe(400);
+    expect(provider.create).not.toHaveBeenCalled();
+  });
+  it("stops calling the provider once the shared daily cap is spent", async () => {
+    vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://redis.example");
+    vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "test-only-token");
+    // Calls in order: per-client burst, per-client daily, global daily.
+    redis.exec
+      .mockResolvedValueOnce([1, 1, 5_000])
+      .mockResolvedValueOnce([1, 1, 3_600_000])
+      .mockResolvedValueOnce([301, 0, 3_600_000]);
+    const response = await POST(request());
+    expect(response.status).toBe(429);
+    expect(Number(response.headers.get("retry-after"))).toBeGreaterThan(0);
+    expect(provider.create).not.toHaveBeenCalled();
+  });
+  it("stops one client from spending the shared daily cap alone", async () => {
+    vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://redis.example");
+    vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "test-only-token");
+    redis.exec
+      .mockResolvedValueOnce([1, 1, 5_000])
+      .mockResolvedValueOnce([41, 0, 3_600_000]);
+    const response = await POST(request());
+    expect(response.status).toBe(429);
+    // The global budget is untouched: only two Redis calls were made.
+    expect(redis.exec).toHaveBeenCalledTimes(2);
     expect(provider.create).not.toHaveBeenCalled();
   });
   it("handles missing configuration without constructing a provider request", async () => {
