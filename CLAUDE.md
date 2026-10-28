@@ -10,6 +10,8 @@ Work is split into phases. Read `docs/ROADMAP.md` for the plan, the current phas
 
 - `npm run dev`: dev server
 - `npm run check`: lint, typecheck, Vitest and Prettier check. Run before every commit.
+- `npm run test:e2e`: Playwright e2e and axe checks (builds and starts the app itself)
+- `npm run screenshots`: full-page screenshots at 375/768/1440 px in `screenshots/` (set `SCREENSHOT_LABEL` to name a set)
 - `npm run build`: production build
 - `npm run format`: apply Prettier
 - Node 24 (see `.nvmrc`)
@@ -38,7 +40,7 @@ Never invent biographical facts: dates, courses, certifications, employers or AI
 
 ## Definition of done
 
-`npm run check` and `npm run build` pass. For UI changes, also look at the result in a browser at mobile and desktop widths.
+`npm run check`, `npm run build` and `npm run test:e2e` pass. For UI changes, also look at the result in a browser at mobile and desktop widths.
 
 ## Git
 
