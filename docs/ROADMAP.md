@@ -27,7 +27,7 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
   - Contact form honeypot and minimum fill time.
   - CSP without nonce, `Permissions-Policy`, `Referrer-Policy: strict-origin-when-cross-origin`, plus an e2e test for headers.
   - Dependabot config.
-- [ ] **F3 – Foundation** (M):
+- [x] **F3 – Foundation** (M):
   - Tailwind 4 and remove daisyUI (used only for `breadcrumbs` and `timeline`).
   - `next/font` with Inter (it is declared in `tailwind.config.ts` but never loaded).
   - Image config: put `image/avif` before `image/webp`, replace the deprecated `priority` with `preload`, drop `quality={100}`.
@@ -48,7 +48,6 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 - Contrast: `primary` (#4C51BF) is about 2.5:1 and `secondary` (#9333EA) about 3:1 on #1A202C. Need 4.5:1 for text. (F5)
 - `aria-label` overrides visible text on several links and buttons (label-in-name, WCAG 2.5.3). `aria-label` on `<p>` and `<span>` is invalid. (F6)
 - Chat UI, API error messages and `confirm()` are in Norwegian on an English site. (F7)
-- Breadcrumbs may render a double separator (daisyUI plus a manual `/`). (F3)
 - CSP allows `'unsafe-inline'` for scripts and styles because there is no nonce. Tightening that would make every page dynamic. (accepted in F2)
 
 ## Decisions to make along the way
@@ -94,3 +93,15 @@ Add one entry per finished session: what was done, what was left, anything the n
 - Baseline: `npm run check` (84 Vitest tests), `npm run build` and `npm run test:e2e` (43 tests) pass.
 - **Andreas must do:** create a free Upstash Redis database, then add `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in Netlify's environment variables. Until then the in-memory limiter is used. The new daily-cap message is English; the rest of the chat UI is still Norwegian (F7).
 - Next: F3. Start a new conversation and say "Read docs/ROADMAP.md and do phase 3. Start in plan mode."
+
+### F3 – 2026-10-28
+
+- Tailwind 4: `tailwindcss` and `@tailwindcss/postcss` (devDependencies, added with Andreas's approval), `postcss.config.mjs` uses `@tailwindcss/postcss`, `tailwind.config.ts` is gone. `app/globals.css` has `@import "tailwindcss" source("../app")` and an `@theme` block with the same colours (camelCase names `primaryDark` and `secondaryDark` kept so no class names changed; F5 rewrites the tokens). Removed `daisyui`, `autoprefixer`, `postcss` and the direct `sharp` dependency (`next` still installs `sharp` as an optional dependency for `next start`; Netlify uses its own image CDN).
+- Tailwind 4 differences handled: `outline-none` → `outline-hidden`, bare `rounded` → `rounded-sm`, `flex-grow` → `grow`, buttons keep `cursor: pointer` and placeholders keep gray-400 (both in `@layer base`), bare `border` on `Footer` and `ProjectTags` now names `border-gray-200` (v4 defaults to `currentColor`). The dead `mt-4` on the hero button row was removed: `space-y` overrode it in v3 but not in v4.
+- `Breadcrumbs.tsx` and `Experience.tsx` no longer use daisyUI. The timeline is a grid per entry (measurements copied from the daisyUI version) and matches it pixel for pixel on desktop.
+- `next/font`: Inter (`latin`, `display: swap`) as `--font-inter`, used by `--font-sans`. Self-hosted, so the CSP needs no change. Before F3 the site rendered in the browser's default sans-serif because Inter was never loaded, so text is a bit wider now and some lines wrap differently.
+- Images: `formats` is `["image/avif", "image/webp"]`, `qualities` is `[75]`, `priority` → `preload` on the two LCP images (`About.tsx`, `app/about/page.tsx`), `quality={100}` removed.
+- Deliberate differences from before F3: one breadcrumb separator instead of chevron plus `/`; breadcrumb links get a visible focus ring (daisyUI made it transparent); on mobile every timeline entry has the same bottom margin (daisyUI dropped it for the right-aligned entries, so the page was about 36 px shorter per such entry); Tailwind 4's palette is slightly different, so some greys and the green check icons shift a shade; `hover:` styles only apply on devices that can hover.
+- Left for later: on `/about` the bullet list uses `list-inside`, so a wrapped item like "JavaScript Servers (Node.js, Express)" now breaks back to the bullet column at tablet width (wider Inter text exposes it). F6d rewrites that page. Not checked: Lighthouse/LCP (F8 runs it on a Netlify deploy preview).
+- Baseline: `npm run check` (85 Vitest tests), `npm run build` and `npm run test:e2e` (43 tests) pass. `npm audit --omit=dev` reports 0 vulnerabilities. Screenshot sets in `screenshots/` (git-ignored): `before`, `after-tw4`, `after-font`.
+- Next: F4 (split into 4a and 4b if needed). Start a new conversation and say "Read docs/ROADMAP.md and do phase 4a. Start in plan mode." Remember to add the axe scan for `not-found.tsx` then.
