@@ -13,7 +13,7 @@ export default function Breadcrumbs() {
 
   return (
     <nav aria-label="Breadcrumb" className="container mx-auto px-4 py-4">
-      <div className="breadcrumbs text-sm py-4 text-foreground">
+      <div className="max-w-full overflow-x-auto text-sm py-4 text-foreground">
         <ul className="flex space-x-2">
           <li>
             <Link href="/" className="hover:underline">

@@ -51,7 +51,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Header />
-        <main id="main-content" className="flex-grow" tabIndex={-1}>
+        <main id="main-content" className="grow" tabIndex={-1}>
           <Breadcrumbs />
           {children}
         </main>

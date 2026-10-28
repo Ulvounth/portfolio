@@ -106,7 +106,7 @@ export default function Contact() {
               <strong>Email:</strong>{" "}
               <a
                 href={`mailto:${site.email}`}
-                className="text-yellow-500 hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded"
+                className="text-yellow-500 hover:underline focus:outline-hidden focus:ring-2 focus:ring-yellow-500 rounded-sm"
                 aria-label="Send email to Andreas"
               >
                 {site.email}
@@ -116,7 +116,7 @@ export default function Contact() {
               <strong>Phone:</strong>{" "}
               <a
                 href={`tel:${site.phone}`}
-                className="text-yellow-500 hover:underline focus:outline-none focus:ring-2 focus:ring-yellow-500 rounded"
+                className="text-yellow-500 hover:underline focus:outline-hidden focus:ring-2 focus:ring-yellow-500 rounded-sm"
                 aria-label="Call Andreas at +47 98 64 31 91"
               >
                 {site.phoneDisplay}
@@ -136,7 +136,7 @@ export default function Contact() {
                 href={site.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:bg-gray-700 border hover:text-white border-primary px-2 py-1 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="text-primary hover:bg-gray-700 border hover:text-white border-primary px-2 py-1 rounded-sm transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                 aria-label="Visit Andreas's GitHub profile (opens in new tab)"
               >
                 GitHub
@@ -145,7 +145,7 @@ export default function Contact() {
                 href={site.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-secondary hover:bg-gray-700 hover:text-white border border-secondary px-2 py-1 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="text-secondary hover:bg-gray-700 hover:text-white border border-secondary px-2 py-1 rounded-sm transition-colors focus:outline-hidden focus:ring-2 focus:ring-green-500"
                 aria-label="Visit Andreas's LinkedIn profile (opens in new tab)"
               >
                 LinkedIn
@@ -158,7 +158,7 @@ export default function Contact() {
           {successMessage && (
             <div
               role="status"
-              className="text-green-800 mb-4 p-3 bg-green-100 rounded border border-green-300"
+              className="text-green-800 mb-4 p-3 bg-green-100 rounded-sm border border-green-300"
             >
               {successMessage}
             </div>
@@ -167,7 +167,7 @@ export default function Contact() {
             <div
               role="alert"
               aria-live="assertive"
-              className="text-red-800 mb-4 p-3 bg-red-100 rounded border border-red-300"
+              className="text-red-800 mb-4 p-3 bg-red-100 rounded-sm border border-red-300"
             >
               {errorMessage}
             </div>
@@ -191,7 +191,7 @@ export default function Contact() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full border border-gray-600 bg-background p-2 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
+                className="w-full border border-gray-600 bg-background p-2 rounded-sm focus:outline-hidden focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
                 autoComplete="name"
                 minLength={contactLimits.name.min}
                 maxLength={contactLimits.name.max}
@@ -217,7 +217,7 @@ export default function Contact() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full border border-gray-600 bg-background p-2 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
+                className="w-full border border-gray-600 bg-background p-2 rounded-sm focus:outline-hidden focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
                 autoComplete="email"
                 maxLength={contactLimits.email.max}
                 disabled={loading}
@@ -241,7 +241,7 @@ export default function Contact() {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full border border-gray-600 bg-background p-2 rounded focus:outline-none focus:border-primary focus:ring-2 focus:ring-blue-500 h-32 text-foreground"
+                className="w-full border border-gray-600 bg-background p-2 rounded-sm focus:outline-hidden focus:border-primary focus:ring-2 focus:ring-blue-500 h-32 text-foreground"
                 minLength={contactLimits.message.min}
                 maxLength={contactLimits.message.max}
                 disabled={loading}
@@ -269,7 +269,7 @@ export default function Contact() {
             </div>
             <button
               type="submit"
-              className={`bg-primary text-white px-4 py-2 rounded hover:bg-primaryDark transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+              className={`bg-primary text-white px-4 py-2 rounded-sm hover:bg-primaryDark transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={loading}

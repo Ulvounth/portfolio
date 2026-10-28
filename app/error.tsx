@@ -7,7 +7,7 @@ export default function ErrorPage({ reset }: { reset: () => void }) {
       <p className="mb-6">Please try loading this page again.</p>
       <button
         onClick={reset}
-        className="bg-primary text-white px-4 py-2 rounded hover:bg-primaryDark"
+        className="bg-primary text-white px-4 py-2 rounded-sm hover:bg-primaryDark"
       >
         Try again
       </button>

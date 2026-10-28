@@ -22,7 +22,7 @@ export default function About() {
             Alongside my job search, I&apos;m exploring practical uses of AI and
             context engineering through independent learning.
           </p>
-          <div className="flex flex-col sm:flex-row items-start gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row items-start gap-4">
             <Link
               href="/contact"
               className="bg-white text-background px-6 py-3 rounded-full hover:bg-primaryDark hover:text-white transition-colors text-center inline-flex items-center justify-center min-w-max"

@@ -1,6 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss" source("../app");
+
+@theme {
+  --color-primary: #4c51bf;
+  --color-primaryDark: #434190;
+  --color-secondary: #9333ea;
+  --color-secondaryDark: #7e22ce;
+  --color-background: #1a202c;
+  --color-foreground: #e2e8f0;
+
+  --font-sans: Inter, sans-serif;
+}
 
 body:has(dialog[open]) {
   overflow: hidden;
@@ -8,6 +17,16 @@ body:has(dialog[open]) {
 
 /* Accessibility improvements */
 @layer base {
+  /* Tailwind 4 resets these two; keep the Tailwind 3 look */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::placeholder {
+    color: var(--color-gray-400);
+  }
+
   /* Skip link for keyboard navigation */
   .skip-link {
     position: absolute;

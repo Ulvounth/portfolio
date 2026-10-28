@@ -16,7 +16,7 @@ export default function ProjectCard({
     <article className="bg-background p-2 border border-white border-solid rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:border-blue-500 flex flex-col h-full">
       <Link
         href={`/projects/${project.id}`}
-        className="block flex-grow p-4"
+        className="block grow p-4"
         aria-label={`View details for ${project.title} project`}
       >
         <div className="relative w-full h-48 md:h-64 lg:h-72 mb-4">

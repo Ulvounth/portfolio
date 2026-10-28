@@ -26,7 +26,7 @@ export default function ProjectLinks({ project }: { project: Project }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${link.label} (opens in new tab)`}
-            className={`inline-block px-4 py-2 text-white rounded transition-colors ${link.color}`}
+            className={`inline-block px-4 py-2 text-white rounded-sm transition-colors ${link.color}`}
           >
             {link.text}
           </a>

@@ -51,7 +51,7 @@ export default function Header() {
             alt={`${site.name} Portfolio Logo`}
             width={48}
             height={48}
-            className="rounded object-cover"
+            className="rounded-sm object-cover"
           />
         </Link>
         <button

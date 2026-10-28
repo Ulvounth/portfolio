@@ -41,10 +41,12 @@ const components: Components = {
     </blockquote>
   ),
   code: ({ children }) => (
-    <code className="rounded bg-gray-100 px-1 py-0.5 text-xs">{children}</code>
+    <code className="rounded-sm bg-gray-100 px-1 py-0.5 text-xs">
+      {children}
+    </code>
   ),
   pre: ({ children }) => (
-    <pre className="overflow-x-auto rounded bg-gray-100 p-3">{children}</pre>
+    <pre className="overflow-x-auto rounded-sm bg-gray-100 p-3">{children}</pre>
   ),
   table: ({ children }) => (
     <div className="overflow-x-auto">

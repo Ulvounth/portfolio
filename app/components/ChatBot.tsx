@@ -153,7 +153,7 @@ export default function ChatBot() {
         <button
           ref={launcherRef}
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-secondary hover:bg-secondaryDark text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="fixed bottom-6 right-6 bg-secondary hover:bg-secondaryDark text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-50 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           aria-label="Open chat with AI assistant"
         >
           <ChatBubbleLeftRightIcon className="h-6 w-6" />
@@ -187,7 +187,7 @@ export default function ChatBot() {
                 <button
                   onClick={clearChat}
                   disabled={isLoading}
-                  className="hover:bg-secondaryDark rounded-full p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+                  className="hover:bg-secondaryDark rounded-full p-1 transition-colors focus:outline-hidden focus:ring-2 focus:ring-white"
                   aria-label="Clear chat history"
                   title="Slett samtale"
                 >
@@ -196,7 +196,7 @@ export default function ChatBot() {
               )}
               <button
                 onClick={closeChat}
-                className="hover:bg-secondaryDark rounded-full p-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+                className="hover:bg-secondaryDark rounded-full p-1 transition-colors focus:outline-hidden focus:ring-2 focus:ring-white"
                 aria-label="Close chat"
               >
                 <XMarkIcon className="h-5 w-5" />
@@ -286,7 +286,7 @@ export default function ChatBot() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Skriv en melding..."
-                className="min-w-0 flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent text-gray-800"
+                className="min-w-0 flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-hidden focus:ring-2 focus:ring-secondary focus:border-transparent text-gray-800"
                 disabled={isLoading}
                 maxLength={chatLimits.user}
                 aria-label="Melding til AI-assistenten"
@@ -294,7 +294,7 @@ export default function ChatBot() {
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="bg-secondary hover:bg-secondaryDark text-white p-2 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="bg-secondary hover:bg-secondaryDark text-white p-2 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 aria-label="Send message"
               >
                 <PaperAirplaneIcon className="h-5 w-5" />
