@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Breadcrumbs from "./components/Breadcrumbs";
@@ -7,6 +8,12 @@ import ChatBot from "./components/ChatBot";
 import { generateSEO } from "./utils/seo";
 import { absoluteUrl, site } from "@/data/site";
 import { skills } from "@/data/skills";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   ...generateSEO({
@@ -39,7 +46,7 @@ export default function RootLayout({
     sameAs: [site.social.github, site.social.linkedin],
   };
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body className="antialiased flex flex-col min-h-screen bg-background text-foreground">
         <script
           type="application/ld+json"

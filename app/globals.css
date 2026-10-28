@@ -8,7 +8,7 @@
   --color-background: #1a202c;
   --color-foreground: #e2e8f0;
 
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 body:has(dialog[open]) {
