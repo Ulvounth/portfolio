@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { chatLimits, validateChat } from "@/lib/chat";
+import { chatLimits, trimChatHistory, validateChat } from "@/lib/chat";
 import { validateContact } from "@/lib/contact";
 
 const contact = {
@@ -59,7 +59,9 @@ describe("chat validation", () => {
     { messages: [{ ...message, content: " " }] },
     { messages: [{ ...message, content: 42 }] },
     { messages: [{ role: "assistant", content: "unfinished conversation" }] },
-    { messages: Array.from({ length: 51 }, () => message) },
+    {
+      messages: Array.from({ length: chatLimits.messages + 1 }, () => message),
+    },
   ])("rejects malformed conversations: %j", (input) => {
     expect(validateChat(input)).toBeNull();
   });
@@ -89,5 +91,60 @@ describe("chat validation", () => {
         ],
       }),
     ).toBeNull();
+  });
+  it("caps the total conversation length", () => {
+    const long = (role: "user" | "assistant") => ({
+      role,
+      content: "a".repeat(chatLimits[role]),
+    });
+    const filler = Array.from({ length: 4 }, (_, i) =>
+      long(i % 2 ? "user" : "assistant"),
+    );
+    expect(validateChat({ messages: [...filler, long("user")] })).toBeNull();
+    expect(
+      validateChat({ messages: [long("assistant"), message] }),
+    ).not.toBeNull();
+  });
+});
+
+describe("trimChatHistory", () => {
+  const turn = (role: "user" | "assistant", content = "text") => ({
+    role,
+    content,
+  });
+  it("keeps short conversations unchanged", () => {
+    const messages = [turn("user"), turn("assistant"), turn("user")];
+    expect(trimChatHistory(messages)).toEqual(messages);
+  });
+  it("keeps the newest messages within the count limit and starts on a user turn", () => {
+    const messages = Array.from({ length: 30 }, (_, i) =>
+      turn(i % 2 ? "assistant" : "user", String(i)),
+    ).concat(turn("user", "last"));
+    const trimmed = trimChatHistory(messages);
+    expect(trimmed.length).toBeLessThanOrEqual(chatLimits.messages);
+    expect(trimmed[0].role).toBe("user");
+    expect(trimmed.at(-1)?.content).toBe("last");
+    expect(validateChat({ messages: trimmed })).not.toBeNull();
+  });
+  it("always keeps the newest message, even if it breaks a limit", () => {
+    const tooLong = turn("user", "a".repeat(chatLimits.user + 1));
+    expect(trimChatHistory([tooLong])).toEqual([tooLong]);
+    expect(
+      trimChatHistory([turn("user"), turn("assistant"), tooLong]),
+    ).toContain(tooLong);
+  });
+  it("drops the oldest messages once the character budget is spent", () => {
+    const big = "a".repeat(chatLimits.assistant);
+    const messages = [
+      turn("user", "first"),
+      turn("assistant", big),
+      turn("user", "second"),
+      turn("assistant", big),
+      turn("user", "third"),
+    ];
+    const trimmed = trimChatHistory(messages);
+    expect(trimmed.map((m) => m.content)).not.toContain("first");
+    expect(trimmed.at(-1)?.content).toBe("third");
+    expect(validateChat({ messages: trimmed })).not.toBeNull();
   });
 });

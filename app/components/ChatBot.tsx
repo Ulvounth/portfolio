@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import {
   chatLimits,
   readChatStream,
+  trimChatHistory,
   type ChatMessage as ConversationMessage,
 } from "@/lib/chat";
 import {
@@ -88,12 +89,10 @@ export default function ChatBot() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: [
+          messages: trimChatHistory([
             ...messages.filter((m) => !m.isError && m.content.trim()),
             userMessage,
-          ]
-            .slice(-chatLimits.messages)
-            .map((m) => ({ role: m.role, content: m.content })),
+          ]).map((m) => ({ role: m.role, content: m.content })),
         }),
       });
 
