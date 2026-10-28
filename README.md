@@ -14,6 +14,8 @@ npm run dev
 
 Set `GROQ_API_KEY` for chat and `RESEND_API_KEY` for email. `GROQ_MODEL` is optional. `EMAIL_FROM` must use a domain verified in Resend; `EMAIL_TO` sets the recipient. Keys are used only by server routes. Pages build without keys; unconfigured integrations return a recoverable error.
 
+Rate limits are shared between Netlify instances when `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set (free Upstash Redis database, REST API). The chat then also has a cap of 40 requests per client and 300 in total per 24 hours. Without them the API routes fall back to a per-process limiter, which works but is weaker.
+
 ## Checks
 
 ```sh

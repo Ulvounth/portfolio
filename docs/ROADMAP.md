@@ -20,7 +20,7 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 
 - [x] **F0 – AI workspace** (S): `AGENTS.md`, `CLAUDE.md`, `.mcp.json`, `.claude/settings.json`, this file.
 - [x] **F1 – Safety net** (M): Playwright e2e on all routes, axe a11y checks (WCAG 2.2 AA, `color-contrast` disabled until F5), `npm run screenshots` at 375/768/1440 px, data-integrity Vitest tests, CI e2e job.
-- [ ] **F2 – Security and robust APIs** (M):
+- [x] **F2 – Security and robust APIs** (M):
   - Tighten chat payload limits: about 20 messages, a total character cap, and a body of about 64 KB. Share the limits via `chatLimits` and trim history on the client.
   - Use `x-nf-client-connection-ip` for the client IP on Netlify.
   - Shared rate limiting (Upstash Redis) with a global daily cap on chat. Fall back to the in-memory limiter without env vars.
@@ -49,13 +49,11 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 - `aria-label` overrides visible text on several links and buttons (label-in-name, WCAG 2.5.3). `aria-label` on `<p>` and `<span>` is invalid. (F6)
 - Chat UI, API error messages and `confirm()` are in Norwegian on an English site. (F7)
 - Breadcrumbs may render a double separator (daisyUI plus a manual `/`). (F3)
-- Chat accepts 50 messages and up to 12,000 characters per assistant message, which the client can forge. (F2)
-- The rate limiter is per process, which is weak on Netlify. (F2)
-- No CSP or `Permissions-Policy`. (F2)
+- CSP allows `'unsafe-inline'` for scripts and styles because there is no nonce. Tightening that would make every page dynamic. (accepted in F2)
 
 ## Decisions to make along the way
 
-- F2: Upstash account for shared rate limiting? If not, keep the in-memory limiter with lower caps.
+- F2: ~~Upstash?~~ Decided: yes, with an in-memory fallback. Andreas still has to create the database and set the env vars on Netlify.
 - F4: project slugs (`holidaze`, `bidbazaar`, `golfassistant`?).
 - F5: design direction and theme.
 - F6: keep the Facebook link and the public phone number?
@@ -83,3 +81,16 @@ Add one entry per finished session: what was done, what was left, anything the n
 - Not covered: the default Next 404 page has no axe scan (F4 adds `not-found.tsx`; add the scan then). `npm run check` does not include e2e, so run `npm run test:e2e` too.
 - Baseline: `npm run check`, `npm run build` and `npm run test:e2e` pass.
 - Next: F2. Start a new conversation and say "Read docs/ROADMAP.md and do phase 2. Start in plan mode."
+
+### F2 – 2026-10-28
+
+- Chat limits (`chatLimits` in `lib/chat.ts`): 20 messages, 2000 characters per user message, 10,000 per assistant message, 16,000 in total, 64 KB body. `trimChatHistory` trims on the client, keeping the newest messages (the newest one is always kept) and starting on a user turn.
+- `getClientIdentifier` prefers `x-nf-client-connection-ip`. `x-forwarded-for` and `x-real-ip` stay as fallbacks for local runs only.
+- Rate limiting: `createRateLimiter(limit, windowMs, name)` is now async and uses Upstash Redis (fixed window, `@upstash/redis` added with Andreas's approval) when `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set. Identifiers are SHA-256 hashed in the keys. It falls back to the old per-process limiter (`createMemoryRateLimiter`) without env vars or if Redis fails. Each hit is one Redis transaction (`INCR`, `PEXPIRE NX`, `PTTL`), so a key never lacks a TTL. Chat also has a per-client cap of 40 requests per 24 hours (`chat-client-daily`) and a global cap of 300 per 24 hours (`chat-daily`), both checked after validation and just before the Groq call. A determined attacker with many IPs can still spend the global cap; that trades availability for a bounded bill.
+- Contact form: hidden `ref_code` honeypot (autofill can fill it, so a hit returns an error that points to the email address, never a fake success) and a minimum fill time of 3 s (`elapsedMs` measured with `performance.now()`, so clock skew does not matter; `checkContactBot` in `lib/contact.ts`). Both values come from the client, so this only stops naive bots.
+- `next.config.mjs`: CSP without nonce (`'unsafe-inline'` for script and style, `'unsafe-eval'` in dev only), `Permissions-Policy`, `Referrer-Policy: strict-origin-when-cross-origin`. `e2e/security.spec.ts` checks the headers and that every page plus the open chat has no CSP violations. If an external script, font or image is added later, update the CSP.
+- Added `.github/dependabot.yml` (weekly npm and GitHub Actions, minor and patch grouped).
+- Playwright now also blanks the Upstash env vars, so e2e never touches Redis.
+- Baseline: `npm run check` (84 Vitest tests), `npm run build` and `npm run test:e2e` (43 tests) pass.
+- **Andreas must do:** create a free Upstash Redis database, then add `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` in Netlify's environment variables. Until then the in-memory limiter is used. The new daily-cap message is English; the rest of the chat UI is still Norwegian (F7).
+- Next: F3. Start a new conversation and say "Read docs/ROADMAP.md and do phase 3. Start in plan mode."
