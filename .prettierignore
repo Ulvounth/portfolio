@@ -7,3 +7,6 @@ public/
 package-lock.json
 next-env.d.ts
 .env*
+test-results/
+playwright-report/
+screenshots/
