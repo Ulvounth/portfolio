@@ -46,8 +46,7 @@ export default function About() {
               sizes="(max-width: 768px) 80vw, 50vw"
               style={{ objectFit: "cover", objectPosition: "top center" }}
               className="rounded-full shadow-2xl"
-              quality={100}
-              priority
+              preload
             />
           </div>
         </div>
