@@ -5,6 +5,12 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Major upgrades (Tailwind 4, TypeScript 7, ESLint 10) are planned in
+    # docs/ROADMAP.md and done by hand.
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - version-update:semver-major
     groups:
       minor-and-patch:
         update-types:
