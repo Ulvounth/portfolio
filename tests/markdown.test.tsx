@@ -7,21 +7,21 @@ describe("assistant Markdown rendering", () => {
     const html = renderToStaticMarkup(
       <ChatMessage
         content={
-          "**Bakgrunn**\n\n- Ferdigutdannet\n- Jobbsøkende\n\n[Holidaze](/projects/1)"
+          "**Bakgrunn**\n\n- Ferdigutdannet\n- Jobbsøkende\n\n[Holidaze](/projects/holidaze)"
         }
       />,
     );
     expect(html).toContain("<strong>Bakgrunn</strong>");
     expect(html).toContain("<ul");
-    expect(html).toContain('href="/projects/1"');
+    expect(html).toContain('href="/projects/holidaze"');
     expect(html).not.toContain("**");
   });
   it("keeps external links in a new tab and internal links in-app", () => {
     const html = renderToStaticMarkup(
-      <ChatMessage content="[Holidaze](/projects/1) [GitHub](https://github.com/Ulvounth) [Proto](//evil.example)" />,
+      <ChatMessage content="[Holidaze](/projects/holidaze) [GitHub](https://github.com/Ulvounth) [Proto](//evil.example)" />,
     );
     expect(html).toContain('<a class="');
-    expect(html).toMatch(/href="\/projects\/1"(?![^>]*target=)/);
+    expect(html).toMatch(/href="\/projects\/holidaze"(?![^>]*target=)/);
     expect(html).toMatch(
       /href="https:\/\/github\.com\/Ulvounth"[^>]*target="_blank"/,
     );

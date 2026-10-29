@@ -1,3 +1,9 @@
+import { readFileSync } from "node:fs";
+
+const projects = JSON.parse(
+  readFileSync(new URL("./data/projects.json", import.meta.url), "utf-8"),
+);
+
 // No nonce: that would make every page dynamic. Next.js and the JSON-LD block
 // need inline scripts, so script-src allows 'unsafe-inline'. Everything else is
 // locked to this origin. React needs eval in development only.
@@ -30,6 +36,17 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     qualities: [75],
+  },
+
+  // Project URLs used to be numeric. Keep the old links working for search engines.
+  async redirects() {
+    return projects
+      .filter((project) => project.legacyId)
+      .map((project) => ({
+        source: `/projects/${project.legacyId}`,
+        destination: `/projects/${project.id}`,
+        permanent: true,
+      }));
   },
 
   // Headers for SEO and security

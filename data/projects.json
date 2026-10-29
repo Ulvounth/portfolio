@@ -1,6 +1,7 @@
 [
   {
-    "id": "1",
+    "id": "holidaze",
+    "legacyId": "1",
     "title": "Holidaze",
     "description": "This is my final project for Noroff, developed using Next.js, TypeScript, and Tailwind CSS. It is a holiday booking platform called Holidaze, where users can browse, book, and manage vacation rentals effortlessly.",
     "images": [
@@ -13,7 +14,8 @@
     "tags": ["Next.js", "TypeScript", "Tailwind CSS"]
   },
   {
-    "id": "3",
+    "id": "auction-website",
+    "legacyId": "3",
     "title": "Auction Website",
     "description": "This was my second year semester project at Noroff. Develop an engaging front-end application for an auction website where users can register, log in, update avatars, view credits, create listings, and bid on items. Leverages the Noroff API for backend functionality, ensuring a seamless user experience for both registered and unregistered users.",
     "images": [
@@ -26,7 +28,8 @@
     "tags": ["HTML", "Bootstrap", "Sass", "JavaScript"]
   },
   {
-    "id": "5",
+    "id": "golfassistant",
+    "legacyId": "5",
     "title": "GolfAssistant",
     "description": "A comprehensive digital golf assistant that helps players track rounds, manage their handicap, and compete with friends. Features include automatic WHS handicap calculation based on registered rounds, a competitive leaderboard system, complete round history with performance tracking, and multi-player support. Built with React, TypeScript, and Tailwind CSS on the frontend, powered by Node.js and Express backend with AWS Lambda serverless deployment, DynamoDB for data storage, and JWT authentication.",
     "images": [

@@ -2,6 +2,8 @@ import projectData from "./projects.json";
 
 export interface Project {
   id: string;
+  // Former numeric id; next.config.mjs redirects /projects/<legacyId> to the slug.
+  legacyId?: string;
   title: string;
   description: string;
   images: string[];
