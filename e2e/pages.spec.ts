@@ -19,15 +19,46 @@ for (const { path, heading } of routes) {
   });
 }
 
-test("unknown routes return 404", async ({ page }) => {
-  const response = await page.goto("/this-page-does-not-exist");
-  expect(response?.status()).toBe(404);
+// Pages pass their breadcrumb trail in by hand, so check it against the URL.
+for (const { path } of routes.filter(({ path }) => path !== "/")) {
+  test(`${path} has a breadcrumb trail that matches its URL`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const trail = page.getByRole("navigation", { name: "Breadcrumb" });
+    const segments = path.split("/").filter(Boolean);
+    await expect(trail.getByRole("listitem")).toHaveCount(segments.length + 1);
+    await expect(trail.getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+    for (let index = 1; index < segments.length; index++) {
+      const href = `/${segments.slice(0, index).join("/")}`;
+      await expect(trail.locator(`a[href="${href}"]`)).toHaveCount(1);
+    }
+    await expect(trail.locator('[aria-current="page"]')).toHaveText(/\S/);
+  });
+}
+
+test("the home page has no breadcrumb trail", async ({ page }) => {
+  await page.goto("/");
+  await expect(
+    page.getByRole("navigation", { name: "Breadcrumb" }),
+  ).toHaveCount(0);
 });
 
-test("unknown project ids return 404", async ({ page }) => {
-  const response = await page.goto("/projects/does-not-exist");
-  expect(response?.status()).toBe(404);
-});
+for (const path of ["/this-page-does-not-exist", "/projects/does-not-exist"]) {
+  test(`${path} returns 404 with the not-found page`, async ({ page }) => {
+    const response = await page.goto(path);
+    expect(response?.status()).toBe(404);
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Page not found" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("main").getByRole("link", { name: "Go to the home page" }),
+    ).toHaveAttribute("href", "/");
+  });
+}
 
 test("main navigation reaches every page", async ({ page }) => {
   await page.goto("/");

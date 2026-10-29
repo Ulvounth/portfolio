@@ -29,6 +29,12 @@ for (const { path } of routes) {
   });
 }
 
+test("the 404 page has no axe violations", async ({ page }) => {
+  await page.goto("/this-page-does-not-exist");
+  await expect(page.locator("main")).toBeVisible();
+  expect(await scan(page)).toEqual([]);
+});
+
 test("the open chat window has no axe violations", async ({ page }) => {
   await page.goto("/");
   await page
