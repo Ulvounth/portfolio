@@ -1,52 +1,39 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
-import { generateSEO } from "@/lib/seo";
-import { absoluteUrl, site } from "@/data/site";
-import { skills } from "@/data/skills";
+import { site } from "@/data/site";
+import { openGraphDefaults, twitterDefaults } from "@/lib/seo";
+import { personJsonLd } from "@/lib/structured-data";
+import JsonLd from "./components/JsonLd";
 import { inter } from "./fonts";
 
+// Canonical URL and share image are set per page (lib/seo.ts and the
+// opengraph-image file), so nothing here may claim a canonical for every route.
 export const metadata: Metadata = {
-  ...generateSEO({
-    title: `${site.name} Portfolio`,
-    description: site.description,
-  }),
   title: {
     default: `${site.name} – ${site.title}`,
     template: `%s | ${site.name}`,
   },
+  description: site.description,
   metadataBase: new URL(site.url),
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
   verification: { google: "f288ab6595c59e39" },
+  openGraph: openGraphDefaults,
+  twitter: twitterDefaults,
 };
+
+export const viewport: Viewport = { themeColor: site.themeColor };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: site.name,
-    jobTitle: site.title,
-    description: site.description,
-    url: site.url,
-    image: absoluteUrl(site.image),
-    address: { "@type": "PostalAddress", addressCountry: "ES" },
-    knowsAbout: skills.map((skill) => skill.name),
-    sameAs: [site.social.github, site.social.linkedin],
-  };
   return (
     <html lang="en" className={inter.variable}>
       <body className="antialiased flex flex-col min-h-screen bg-background text-foreground">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-          }}
-        />
+        <JsonLd data={personJsonLd()} />
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

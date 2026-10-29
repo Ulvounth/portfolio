@@ -33,9 +33,9 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
   - Image config: put `image/avif` before `image/webp`, replace the deprecated `priority` with `preload`, drop `quality={100}`.
   - Move `tailwindcss` to devDependencies and review whether `sharp` is needed.
   - Visually identical before/after, apart from deliberate fixes.
-- [ ] **F4 – Architecture and SEO** (M–L, split into 4a and 4b if needed):
+- [x] **F4 – Architecture and SEO** (M–L, split into 4a and 4b if needed):
   - [x] 4a: rename the two `About` components (`About.tsx` → `Hero.tsx`) and `Contact` in `ContactClient.tsx`; move `app/utils/seo.ts` to `lib/seo.ts`; make Breadcrumbs, Header and the contact page mostly server components; add `not-found.tsx` and `global-error.tsx`; remove hardcoded text in favour of `data/`.
-  - [ ] 4b: descriptive project slugs with permanent redirects from `/projects/1|3|5`; `opengraph-image.tsx`; `icon`/`apple-icon` and manifest icons; `viewport.themeColor`; JSON-LD for WebSite, BreadcrumbList and projects; canonical per page instead of in the root layout.
+  - [x] 4b: descriptive project slugs with permanent redirects from `/projects/1|3|5`; `opengraph-image.tsx`; `icon`/`apple-icon` and manifest icons; `viewport.themeColor`; JSON-LD for WebSite, BreadcrumbList and projects; canonical per page instead of in the root layout.
 - [ ] **F5 – Design system** (M, needs input from Andreas): references and mood, dark only or light and dark, tokens in `@theme` with verified AA contrast, base components in `components/ui/`, re-enable axe `color-contrast`.
 - [ ] **F6 – Page redesign** (4 sessions): 6a layout (header, footer, breadcrumbs), 6b home page, 6c projects, 6d about, contact, 404 and error. Per session: before/after screenshots, axe clean, Lighthouse ≥ 95, keyboard test.
 - [ ] **F7 – Chatbot v2** (2 sessions):
@@ -53,7 +53,7 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 ## Decisions to make along the way
 
 - F2: ~~Upstash?~~ Decided: yes, with an in-memory fallback. Andreas still has to create the database and set the env vars on Netlify.
-- F4: project slugs (`holidaze`, `bidbazaar`, `golfassistant`?).
+- F4: ~~project slugs?~~ Decided: `holidaze`, `auction-website`, `golfassistant`.
 - F5: design direction and theme.
 - F6: keep the Facebook link and the public phone number?
 - F8: analytics tool.
@@ -118,3 +118,14 @@ Add one entry per finished session: what was done, what was left, anything the n
 - Tests: e2e checks the 404 heading and home link for unknown routes and unknown project ids, axe scans the 404 page (the gap from F1 is closed), Vitest covers `site.intro`, `navLabel` and `about`. The mobile menu test does not cover "click the link of the current page"; that was checked by hand.
 - Baseline: `npm run check` (88 Vitest tests), `npm run build` and `npm run test:e2e` (51 tests, including a breadcrumb-trail check per route) pass. Screenshot sets in `screenshots/` (git-ignored): `before-f4a`, `after-f4a`, `after-f4a-review`.
 - Next: F4b. Start a new conversation and say "Read docs/ROADMAP.md and do phase 4b. Start in plan mode." The slug decision (`holidaze`, `bidbazaar`, `golfassistant`?) is still open: ask Andreas before planning.
+
+### F4b – 2026-10-29
+
+- Slugs: project ids are now `holidaze`, `auction-website` and `golfassistant`. `data/projects.json` keeps the old numeric id as `legacyId`, and `next.config.mjs` builds the permanent (308) redirects `/projects/1|3|5` → slug from that file, so there is no second list to maintain. The chat prompt example link and the Markdown test fixtures use the slug. The screenshot files are now named `projects-<slug>.png`.
+- Canonical per page: the root layout no longer spreads `generateSEO`, so it sets no canonical, `og:url` or image. Every page still gets its own canonical from `generateSEO`; the 404 page has none. `viewport.themeColor`, the manifest `theme_color` and `background_color` and the share image background all read `site.themeColor` (`#1A202C`, the page background; the manifest used `#9333EA` before). A data-integrity test checks that it matches `--color-background` in `app/globals.css`, so F5 has to change both together.
+- Share image: `app/opengraph-image.tsx` (text only: name, title, host on `#1A202C`, default font so the name is not bold). A page's own `openGraph` replaces the one from the layout, including a file-based image, so on `/about`, `/contact` and `/projects` the generated image had disappeared. `generateSEO` therefore names `/opengraph-image` (1200×630) when no image is given; the route and size live in `shareImage` in `lib/seo.ts`, which `opengraph-image.tsx` also reads, and e2e checks that the PNG really has the size the page declares. The layout and `generateSEO` share `openGraphDefaults` and `twitterDefaults` for the same reason. Project pages keep their first screenshot. There is no `twitter-image` file (X falls back to `og:image`).
+- Icons: made from `public/images/logo-new.webp` with a one-off `sharp` script (not committed; `sharp` is only `next`'s optional dependency): `app/icon.png` (96), `app/apple-icon.png` (180), `public/icons/icon-192.png` and `icon-512.png` for the manifest. `favicon.ico` is unchanged. Redo the icons if F5/F6 changes the logo.
+- JSON-LD: `lib/structured-data.ts` builds Person (moved from the layout, still on every page), WebSite (home page only), BreadcrumbList (rendered by `Breadcrumbs` from the same `items` as the visible trail, so they cannot drift) and `SoftwareSourceCode` for projects. `app/components/JsonLd.tsx` renders them with `<` escaped. `site.image` is now only used by the Person block and the about page. The Person address country comes from `site.countryCode`.
+- Tests: `tests/structured-data.test.ts`, extra cases in `tests/seo.test.ts` and `tests/data-integrity.test.ts` (legacy ids), and `e2e/seo.spec.ts` (redirects, sitemap, canonical and share image per route, no canonical on 404, theme colour, icons and manifest icons, JSON-LD per route including breadcrumbs matching the visible trail).
+- Baseline: `npm run check` (99 Vitest tests), `npm run build` and `npm run test:e2e` (73 tests) pass. The 21 before/after screenshots at 375/768/1440 px are byte-identical to the F4a set (`after-f4b` vs `after-f4a-review`). Not run: Google's Rich Results test and a social-card preview (they need the deployed site; F8).
+- Next: F5 (design system, needs input from Andreas): references and mood, dark only or light and dark, tokens, base components, re-enable axe `color-contrast`. Start a new conversation and say "Read docs/ROADMAP.md and do phase 5. Start in plan mode."

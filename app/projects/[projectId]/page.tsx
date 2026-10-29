@@ -3,7 +3,9 @@ import type { Metadata } from "next";
 import { getProject, projects } from "@/data/projects";
 import { navLabel } from "@/data/site";
 import { generateSEO } from "@/lib/seo";
+import { projectJsonLd } from "@/lib/structured-data";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
+import JsonLd from "@/app/components/JsonLd";
 import ProjectImageModal from "@/app/components/ProjectImageModal";
 import ProjectLinks from "@/app/components/ProjectLinks";
 import ProjectTags from "@/app/components/ProjectTags";
@@ -33,6 +35,7 @@ export default async function ProjectPage({ params }: PageProps) {
   if (!project) notFound();
   return (
     <>
+      <JsonLd data={projectJsonLd(project)} />
       <Breadcrumbs
         items={[
           { label: navLabel("/projects"), href: "/projects" },
