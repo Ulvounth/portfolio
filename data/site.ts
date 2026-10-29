@@ -13,6 +13,10 @@ export const site = {
   phone: "+4798643191",
   phoneDisplay: "+47 98 64 31 91",
   location: "Torrevieja, Spain",
+  countryCode: "ES",
+  // Browser chrome, PWA and share-image colour. Keep in sync with
+  // --color-background in app/globals.css (tests/data-integrity.test.ts checks it).
+  themeColor: "#1A202C",
   updatedAt: "2026-10-27",
   cv: "/cv/CV_Andreas_ES.pdf",
   social: {

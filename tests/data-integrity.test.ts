@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { about } from "@/data/about";
@@ -44,6 +44,13 @@ describe("site data", () => {
     }
   });
 
+  it("uses the page background as its theme colour", () => {
+    const css = readFileSync(join(process.cwd(), "app/globals.css"), "utf-8");
+    expect(css.toLowerCase()).toContain(
+      `--color-background: ${site.themeColor.toLowerCase()};`,
+    );
+  });
+
   it("has an intro without empty or duplicate paragraphs", () => {
     expect(site.intro.length).toBeGreaterThan(0);
     for (const paragraph of site.intro) {
@@ -82,6 +89,17 @@ describe("projects", () => {
     expectUnique(projects.map((project) => project.id));
     for (const project of projects) {
       expect(project.id).toMatch(/^[a-z0-9-]+$/);
+    }
+  });
+
+  it("has unique legacy ids that never collide with a current id", () => {
+    const legacyIds = projects.flatMap((project) =>
+      project.legacyId ? [project.legacyId] : [],
+    );
+    expectUnique(legacyIds);
+    for (const legacyId of legacyIds) {
+      expect(legacyId).toMatch(/^\d+$/);
+      expect(projects.some((project) => project.id === legacyId)).toBe(false);
     }
   });
 
