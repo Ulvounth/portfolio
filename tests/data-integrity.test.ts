@@ -1,9 +1,10 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { about } from "@/data/about";
 import { experience } from "@/data/experience";
 import { projects } from "@/data/projects";
-import { navigation, site } from "@/data/site";
+import { navigation, navLabel, site } from "@/data/site";
 import { skills } from "@/data/skills";
 
 const publicFile = (path: string) => join(process.cwd(), "public", path);
@@ -41,6 +42,34 @@ describe("site data", () => {
       expect(link.href).toMatch(/^\/[a-z-]*$/);
       expect(link.label.trim()).not.toBe("");
     }
+  });
+
+  it("has an intro without empty or duplicate paragraphs", () => {
+    expect(site.intro.length).toBeGreaterThan(0);
+    for (const paragraph of site.intro) {
+      expect(paragraph.trim()).not.toBe("");
+    }
+    expectUnique(site.intro);
+  });
+
+  it("resolves navigation labels and falls back to the path", () => {
+    expect(navLabel("/projects")).toBe("Projects");
+    expect(navLabel("/unknown")).toBe("/unknown");
+  });
+});
+
+describe("about page content", () => {
+  it("has no empty or duplicate text", () => {
+    const text = [
+      ...about.intro,
+      about.studies.text,
+      ...about.studies.items,
+      ...about.story,
+    ];
+    for (const entry of text) {
+      expect(entry.trim()).not.toBe("");
+    }
+    expectUnique(text);
   });
 });
 

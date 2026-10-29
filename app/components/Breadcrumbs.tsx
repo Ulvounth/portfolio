@@ -1,16 +1,12 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { getProject } from "@/data/projects";
-import { navigation } from "@/data/site";
 
-export default function Breadcrumbs() {
-  const pathname = usePathname();
-  const pathArray = pathname.split("/").filter((path) => path);
+export interface BreadcrumbItem {
+  label: string;
+  href: string;
+}
 
-  if (pathname === "/") return null;
-
+// `items` is the trail below Home; the last item is the current page.
+export default function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
     <nav aria-label="Breadcrumb" className="container mx-auto px-4 py-4">
       <div className="max-w-full overflow-x-auto text-sm py-4 text-foreground">
@@ -20,30 +16,20 @@ export default function Breadcrumbs() {
               Home
             </Link>
           </li>
-          {pathArray.map((path, index) => {
-            const isLast = index === pathArray.length - 1;
-            const href = "/" + pathArray.slice(0, index + 1).join("/");
-
-            return (
-              <li key={href} className="flex items-center space-x-2">
-                <span aria-hidden="true">/</span>
-                {isLast ? (
-                  <span className="text-gray-400" aria-current="page">
-                    {navigation.find((item) => item.href === href)?.label ||
-                      (pathArray[0] === "projects"
-                        ? getProject(path)?.title
-                        : undefined) ||
-                      path}
-                  </span>
-                ) : (
-                  <Link href={href} className="hover:underline text-primary">
-                    {navigation.find((item) => item.href === href)?.label ||
-                      path}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
+          {items.map((item, index) => (
+            <li key={item.href} className="flex items-center space-x-2">
+              <span aria-hidden="true">/</span>
+              {index === items.length - 1 ? (
+                <span className="text-gray-400" aria-current="page">
+                  {item.label}
+                </span>
+              ) : (
+                <Link href={item.href} className="hover:underline text-primary">
+                  {item.label}
+                </Link>
+              )}
+            </li>
+          ))}
         </ul>
       </div>
     </nav>

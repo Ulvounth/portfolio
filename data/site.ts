@@ -4,6 +4,10 @@ export const site = {
   url: "https://andreasulvund.no",
   description:
     "Junior Web Developer with completed front-end and backend studies at Noroff. Based in Spain, seeking developer opportunities and exploring practical AI and context engineering.",
+  intro: [
+    "I build modern web applications from front-end to back-end. Having completed my front-end and backend studies at Noroff, I'm now looking for a developer role.",
+    "Alongside my job search, I'm exploring practical uses of AI and context engineering through independent learning.",
+  ],
   image: "/images/andreas-bg.png",
   email: "contact@andreasulvund.no",
   phone: "+4798643191",
@@ -24,6 +28,10 @@ export const navigation = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
+
+export function navLabel(href: string) {
+  return navigation.find((item) => item.href === href)?.label ?? href;
+}
 
 export function absoluteUrl(path: string = "/") {
   return new URL(path, site.url).toString();

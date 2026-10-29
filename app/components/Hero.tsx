@@ -1,32 +1,31 @@
 import Link from "next/link";
 import Image from "next/image";
+import { site } from "@/data/site";
 import CVDownload from "./CVDownload";
 
-export default function About() {
+export default function Hero() {
   return (
     <div className="bg-background text-foreground">
       <div className="container mx-auto my-16 px-4 py-16 md:py-24 lg:py-32 flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 h-full flex flex-col justify-center  space-y-4 md:space-y-6">
-          <h1 className="text-4xl md:text-6xl font-extrabold">
-            ANDREAS ULVUND
+          <h1 className="text-4xl md:text-6xl font-extrabold uppercase">
+            {site.name}
           </h1>
-          <h2 className="text-xl md:text-4xl font-semibold">
-            JUNIOR WEB DEVELOPER
+          <h2 className="text-xl md:text-4xl font-semibold uppercase">
+            {site.title}
           </h2>
-          <p className="text-base md:text-lg text-gray-300 max-w-md">
-            I build modern web applications from front-end to back-end. Having
-            completed my front-end and backend studies at Noroff, I&apos;m now
-            looking for a developer role.
-          </p>
-          <p className="text-base md:text-lg text-gray-300 max-w-md">
-            Alongside my job search, I&apos;m exploring practical uses of AI and
-            context engineering through independent learning.
-          </p>
+          {site.intro.map((paragraph) => (
+            <p
+              key={paragraph}
+              className="text-base md:text-lg text-gray-300 max-w-md"
+            >
+              {paragraph}
+            </p>
+          ))}
           <div className="flex flex-col sm:flex-row items-start gap-4">
             <Link
               href="/contact"
               className="bg-white text-background px-6 py-3 rounded-full hover:bg-primaryDark hover:text-white transition-colors text-center inline-flex items-center justify-center min-w-max"
-              aria-label="Go to contact page to get in touch with Andreas"
             >
               Contact Me
             </Link>
@@ -41,7 +40,7 @@ export default function About() {
           >
             <Image
               src="/images/andypic3.png"
-              alt="Andreas Ulvund, Junior Web Developer - Professional photo"
+              alt={`${site.name}, ${site.title} - Professional photo`}
               fill
               sizes="(max-width: 768px) 80vw, 50vw"
               style={{ objectFit: "cover", objectPosition: "top center" }}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateSEO } from "@/app/utils/seo";
+import { generateSEO } from "@/lib/seo";
 
 describe("generateSEO", () => {
   it("lets the layout template wrap page titles by default", () => {

@@ -31,7 +31,7 @@ npm run build
 - `data/projects.json`: projects, screenshots and links. Preserve IDs to keep existing URLs stable.
 - `data/experience.ts` and `data/skills.ts`: shared by the website and chatbot context.
 - `app/components/`: UI, including shared project cards, links, tags and native dialogs.
-- `app/utils/seo.ts`: consistent metadata for every page.
+- `lib/seo.ts`: consistent metadata for every page.
 - `lib/contact.ts` and `lib/chat.ts`: shared validation and chat stream decoding.
 - `lib/server/`: request parsing, rate limiting and chatbot instructions.
 

@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProject, projects } from "@/data/projects";
-import { generateSEO } from "@/app/utils/seo";
+import { navLabel } from "@/data/site";
+import { generateSEO } from "@/lib/seo";
+import Breadcrumbs from "@/app/components/Breadcrumbs";
 import ProjectImageModal from "@/app/components/ProjectImageModal";
 import ProjectLinks from "@/app/components/ProjectLinks";
 import ProjectTags from "@/app/components/ProjectTags";
@@ -30,18 +32,26 @@ export default async function ProjectPage({ params }: PageProps) {
   const project = getProject((await params).projectId);
   if (!project) notFound();
   return (
-    <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8">{project.title}</h1>
-      <div className="mx-auto mb-12">
-        <p className="text-lg md:text-xl text-gray-300 mb-4">
-          {project.description}
-        </p>
-        <div className="mb-8">
-          <ProjectTags tags={project.tags} />
+    <>
+      <Breadcrumbs
+        items={[
+          { label: navLabel("/projects"), href: "/projects" },
+          { label: project.title, href: `/projects/${project.id}` },
+        ]}
+      />
+      <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
+        <h1 className="text-4xl md:text-5xl font-bold mb-8">{project.title}</h1>
+        <div className="mx-auto mb-12">
+          <p className="text-lg md:text-xl text-gray-300 mb-4">
+            {project.description}
+          </p>
+          <div className="mb-8">
+            <ProjectTags tags={project.tags} />
+          </div>
+          <ProjectLinks project={project} />
         </div>
-        <ProjectLinks project={project} />
+        <ProjectImageModal images={project.images} title={project.title} />
       </div>
-      <ProjectImageModal images={project.images} title={project.title} />
-    </div>
+    </>
   );
 }

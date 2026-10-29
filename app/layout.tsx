@@ -1,19 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Breadcrumbs from "./components/Breadcrumbs";
 import ChatBot from "./components/ChatBot";
-import { generateSEO } from "./utils/seo";
+import { generateSEO } from "@/lib/seo";
 import { absoluteUrl, site } from "@/data/site";
 import { skills } from "@/data/skills";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+import { inter } from "./fonts";
 
 export const metadata: Metadata = {
   ...generateSEO({
@@ -59,7 +52,6 @@ export default function RootLayout({
         </a>
         <Header />
         <main id="main-content" className="grow" tabIndex={-1}>
-          <Breadcrumbs />
           {children}
         </main>
         <Footer />
