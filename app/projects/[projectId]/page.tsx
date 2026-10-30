@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: PageProps) {
       <div className="container mx-auto px-4 py-16 md:py-24 lg:py-32">
         <h1 className="text-4xl md:text-5xl font-bold mb-8">{project.title}</h1>
         <div className="mx-auto mb-12">
-          <p className="text-lg md:text-xl text-gray-300 mb-4">
+          <p className="text-lg md:text-xl text-muted mb-4">
             {project.description}
           </p>
           <div className="mb-8">

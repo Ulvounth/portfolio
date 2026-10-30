@@ -36,7 +36,7 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 - [x] **F4 – Architecture and SEO** (M–L, split into 4a and 4b if needed):
   - [x] 4a: rename the two `About` components (`About.tsx` → `Hero.tsx`) and `Contact` in `ContactClient.tsx`; move `app/utils/seo.ts` to `lib/seo.ts`; make Breadcrumbs, Header and the contact page mostly server components; add `not-found.tsx` and `global-error.tsx`; remove hardcoded text in favour of `data/`.
   - [x] 4b: descriptive project slugs with permanent redirects from `/projects/1|3|5`; `opengraph-image.tsx`; `icon`/`apple-icon` and manifest icons; `viewport.themeColor`; JSON-LD for WebSite, BreadcrumbList and projects; canonical per page instead of in the root layout.
-- [ ] **F5 – Design system** (M, needs input from Andreas): references and mood, dark only or light and dark, tokens in `@theme` with verified AA contrast, base components in `components/ui/`, re-enable axe `color-contrast`.
+- [x] **F5 – Design system** (M, needs input from Andreas): references and mood, dark only or light and dark, tokens in `@theme` with verified AA contrast, base components in `components/ui/`, re-enable axe `color-contrast`.
 - [ ] **F6 – Page redesign** (4 sessions): 6a layout (header, footer, breadcrumbs), 6b home page, 6c projects, 6d about, contact, 404 and error. Per session: before/after screenshots, axe clean, Lighthouse ≥ 95, keyboard test.
 - [ ] **F7 – Chatbot v2** (2 sessions):
   - 7a: English UI and errors, `useChat` hook with tests, lazy-loaded chat window, proper dialog semantics and focus handling, `aria-live` for finished replies, stop button, suggested questions, `sessionStorage` persistence.
@@ -45,7 +45,6 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 
 ## Known issues (assigned to a phase above)
 
-- Contrast: `primary` (#4C51BF) is about 2.5:1 and `secondary` (#9333EA) about 3:1 on #1A202C. Need 4.5:1 for text. (F5)
 - `aria-label` overrides visible text on several links and buttons (label-in-name, WCAG 2.5.3). `aria-label` on `<p>` and `<span>` is invalid. (F6)
 - Chat UI, API error messages and `confirm()` are in Norwegian on an English site. (F7)
 - CSP allows `'unsafe-inline'` for scripts and styles because there is no nonce. Tightening that would make every page dynamic. (accepted in F2)
@@ -54,7 +53,7 @@ Plan for the portfolio overhaul: a new visual design and a better AI chatbot. En
 
 - F2: ~~Upstash?~~ Decided: yes, with an in-memory fallback. Andreas still has to create the database and set the env vars on Netlify.
 - F4: ~~project slugs?~~ Decided: `holidaze`, `auction-website`, `golfassistant`.
-- F5: design direction and theme.
+- F5: ~~design direction and theme?~~ Decided: dark only, technical/developer mood, one teal accent, JetBrains Mono for small labels.
 - F6: keep the Facebook link and the public phone number?
 - F8: analytics tool.
 
@@ -129,3 +128,31 @@ Add one entry per finished session: what was done, what was left, anything the n
 - Tests: `tests/structured-data.test.ts`, extra cases in `tests/seo.test.ts` and `tests/data-integrity.test.ts` (legacy ids), and `e2e/seo.spec.ts` (redirects, sitemap, canonical and share image per route, no canonical on 404, theme colour, icons and manifest icons, JSON-LD per route including breadcrumbs matching the visible trail).
 - Baseline: `npm run check` (99 Vitest tests), `npm run build` and `npm run test:e2e` (73 tests) pass. The 21 before/after screenshots at 375/768/1440 px are byte-identical to the F4a set (`after-f4b` vs `after-f4a-review`). Not run: Google's Rich Results test and a social-card preview (they need the deployed site; F8).
 - Next: F5 (design system, needs input from Andreas): references and mood, dark only or light and dark, tokens, base components, re-enable axe `color-contrast`. Start a new conversation and say "Read docs/ROADMAP.md and do phase 5. Start in plan mode."
+
+### F5 – 2026-10-29
+
+- Decisions (Andreas): dark only, technical/developer mood, palette chosen by Claude. The old indigo `primary` and purple `secondary` are gone; there is one accent.
+- Tokens in the `@theme` block of `app/globals.css` (kebab-case, so `bg-surface`, `text-muted`, `border-border`): `background` #0d1117, `surface` #161b22, `surface-raised` #1f262f, `border` #30363d (decorative), `border-control` #6e7681 (borders of inputs and tags, 3:1), `foreground` #e6edf3, `muted` #9da7b3, `accent` #2dd4bf, `accent-strong` #5eead4 (hover), `on-accent` #0d1117, `danger` #ff7b72, `success` #56d364. `site.themeColor` is `#0D1117` (tested against `--color-background`). The focus ring and skip link use `accent`.
+- `tests/design-tokens.test.ts` parses `globals.css` and checks WCAG ratios: all text colours ≥ 4.5:1 on background, surface and surface-raised, `on-accent` on both accents, control border and focus ring ≥ 3:1. Change a token and this test tells you whether it still passes.
+- Fonts: `JetBrains_Mono` via `next/font/google` in `app/fonts.ts` as `--font-mono` (used for tags, breadcrumbs and chat code). Inter stays for text.
+- `components/ui/`: `Button` (variants `primary`/`secondary`, sizes `md`/`lg`, renders `<button>`, `next/link` or `<a>` depending on `href`/`download`), `TextLink`, `Card` (`interactive` adds the hover state), `Tag`, and `fieldStyles.ts` (`fieldClasses`, shared by the contact form and the chat input). A `Field` component was not made: the form's `aria-describedby` wiring is specific to it, so only the classes are shared. Tailwind scans `components/` through `@source` in `globals.css`; any new folder with class names needs the same.
+- All 24 files that used colour classes now use tokens or the base components (no raw `gray-*`, `blue-*`, `white`, `primary*`, `secondary*` left in `app/`, apart from `bg-white` behind skill icons that need a light background and the black backdrops). The per-component `focus:ring-*` classes are gone; the one `:focus-visible` rule in `globals.css` covers everything.
+- Deliberate differences: buttons are `rounded-md` everywhere (hero and CV buttons were pills), the CV button is outlined instead of filled purple, project links are filled/outlined teal, the contact-page social links are outlined buttons, the chat window is dark (header, bubbles, input), the user's chat bubbles are teal. Layout, spacing and copy are unchanged. The chat window is only recoloured (F7 rewrites it); it is still Norwegian.
+- axe `color-contrast` is enforced again in `e2e/a11y.spec.ts` on every route, the 404 page, the open chat and the mobile menu, with no exclusions. Only `label-content-name-mismatch` is still deferred (F6).
+- Known and left alone: a few skill icons are dark on the dark card (Node.js, .NET, Jest). They are images, so axe does not check them; look at them in F6b and give them the light background via `needsBackground` in `data/skills.ts` if they bother you. The app and manifest icons come from the logo, which has its own background, so they were not redone. Not run: Lighthouse (F8).
+- Baseline: `npm run check` (125 Vitest tests), `npm run build` and `npm run test:e2e` (73 tests) pass. Screenshot sets (git-ignored): `before-f5` and `after-f5`.
+- Next: F6a (layout: header, footer, breadcrumbs). Start a new conversation and say "Read docs/ROADMAP.md and do phase 6a. Start in plan mode." F6 also owns the `aria-label` clean-up.
+
+### F5 follow-up – 2026-10-29
+
+- New logo: an AU monogram (white A, teal U) drawn as SVG. `components/ui/Logo.tsx` renders it inline in the header with token colours (it follows the theme). `app/icon.png`, `app/apple-icon.png`, `public/icons/icon-192.png`/`icon-512.png` and `app/favicon.ico` (one 32 px PNG entry) were regenerated from the same shapes with a one-off `sharp` script (not committed; the colours are hard-coded in it: `#161b22`, `#e6edf3`, `#2dd4bf`). The apple and manifest icons are full-bleed squares, the favicon and `icon.png` have rounded corners. `public/images/logo-new.webp` was deleted. If the palette changes, redo the icons.
+- `/about` was redone in the home page's style, a part of F6d done early: hero-style heading, large intro, Studies card with the studies as tags, story paragraphs, LinkedIn link, and Contact/Projects buttons. The photo is gone (the home page has the portrait); `site.image` (`andreas-bg.png`) is now only used by the Person JSON-LD. Text is unchanged and still comes from `data/about.ts`. F6d still covers the `aria-label` clean-up and a final look at this page.
+- `Tag` is `inline-block` so a long tag wraps as one box on narrow screens.
+- `/about` also has an "At a glance" card (role, location, email from `data/site.ts`, plus the CV button). From `lg` it sits in a right column and is sticky; below `lg` it comes after the buttons.
+
+### F5 review fixes – 2026-10-29
+
+- Review findings fixed: `fieldClasses` has no radius any more (callers add `rounded-md` or `rounded-full`, so two radius classes never compete); hover colours in `Button` and the chat send button use `not-disabled:hover:`, so a disabled button does not react to hover; skill tiles are no longer `interactive` cards; the share image reads its colours from `lib/theme.ts` (`themeColors`), which `tests/design-tokens.test.ts` checks against `globals.css`; the contrast test also covers the control border on `surface-raised` and the dialog close button pairs; `Button` defaults `type` to `"button"` even when a caller passes `type={undefined}`. Not changed: `href=""` still renders a link (only `undefined` gives a `<button>`), which is how the type is meant to work.
+- **The F6 `aria-label` task is mostly done.** Removed the overrides on `CVDownload`, the contact page links and `ProjectLinks` (the "opens in new tab" hint is now visually hidden text inside the link, and project links say which project they belong to). Project cards use a stretched link around the title (`after:absolute after:inset-0` on the link, `relative` on the card, `z-10` on the buttons row), so the link name is the project title. `label-content-name-mismatch` is **no longer disabled in axe**: `e2e/a11y.spec.ts` has no `deferredRules` at all. Remaining `aria-label`s are on landmarks, icon-only controls and the chat UI (F7), none of which show visible text.
+- Not run: a keyboard pass over the stretched project card (the focus ring is drawn on the card through `::after`); look at it in F6c.
+- Baseline: `npm run check` (131 Vitest tests), `npm run build` and `npm run test:e2e` (73 tests, no axe exclusions) pass.

@@ -19,7 +19,7 @@ export default function NavLink({ href, label, mobile = false }: NavLinkProps) {
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`block hover:text-primary transition-colors ${mobile ? "text-lg" : ""} ${active ? "border-b-2 border-primary" : ""}`}
+      className={`block hover:text-accent transition-colors ${mobile ? "text-lg" : ""} ${active ? "border-b-2 border-accent" : ""}`}
     >
       {label}
     </Link>

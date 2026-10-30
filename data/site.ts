@@ -16,7 +16,7 @@ export const site = {
   countryCode: "ES",
   // Browser chrome, PWA and share-image colour. Keep in sync with
   // --color-background in app/globals.css (tests/data-integrity.test.ts checks it).
-  themeColor: "#1A202C",
+  themeColor: "#0D1117",
   updatedAt: "2026-10-27",
   cv: "/cv/CV_Andreas_ES.pdf",
   social: {

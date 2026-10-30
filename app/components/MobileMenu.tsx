@@ -21,7 +21,7 @@ export default function MobileMenu({ children }: { children: ReactNode }) {
         type="button"
         aria-label="Open navigation menu"
         aria-haspopup="dialog"
-        className="text-gray-300 md:hidden"
+        className="text-muted hover:text-accent md:hidden"
         onClick={() => menuRef.current?.showModal()}
       >
         <Bars3Icon className="h-8 w-8" aria-hidden="true" />
@@ -29,7 +29,7 @@ export default function MobileMenu({ children }: { children: ReactNode }) {
       <Dialog
         dialogRef={menuRef}
         label="navigation menu"
-        className="m-0 ml-auto h-dvh max-h-none w-3/4 max-w-sm bg-gray-900 text-white p-6 backdrop:bg-black/60"
+        className="m-0 ml-auto h-dvh max-h-none w-3/4 max-w-sm bg-surface text-foreground p-6 backdrop:bg-black/60"
       >
         {/* Close when a link is followed in this tab, including the link to the current page. */}
         <div

@@ -1,7 +1,7 @@
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import { experience } from "@/data/experience";
 
-const connector = "h-full w-1 justify-self-center border-0 bg-gray-200";
+const connector = "h-full w-1 justify-self-center border-0 bg-border-control";
 
 // One grid per entry: line above, icon, line below in the middle column and the
 // text beside it. From md the text alternates sides; below md it sits to the right.
@@ -34,9 +34,9 @@ export default function Experience() {
             )}
             <div className="col-start-2 row-start-2" aria-hidden="true">
               {entry.current ? (
-                <span className="block h-4 w-4 rounded-full bg-secondary" />
+                <span className="block h-4 w-4 rounded-full bg-accent" />
               ) : (
-                <CheckCircleIcon className="h-5 w-5 text-green-500" />
+                <CheckCircleIcon className="h-5 w-5 text-success" />
               )}
             </div>
             <article

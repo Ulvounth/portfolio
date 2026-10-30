@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Button from "@/components/ui/Button";
 import { site } from "@/data/site";
 import CVDownload from "./CVDownload";
 
@@ -17,18 +17,15 @@ export default function Hero() {
           {site.intro.map((paragraph) => (
             <p
               key={paragraph}
-              className="text-base md:text-lg text-gray-300 max-w-md"
+              className="text-base md:text-lg text-muted max-w-md"
             >
               {paragraph}
             </p>
           ))}
           <div className="flex flex-col sm:flex-row items-start gap-4">
-            <Link
-              href="/contact"
-              className="bg-white text-background px-6 py-3 rounded-full hover:bg-primaryDark hover:text-white transition-colors text-center inline-flex items-center justify-center min-w-max"
-            >
+            <Button href="/contact" size="lg" className="min-w-max">
               Contact Me
-            </Link>
+            </Button>
             <CVDownload />
           </div>
         </div>

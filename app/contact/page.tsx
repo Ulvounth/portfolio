@@ -1,3 +1,5 @@
+import Button from "@/components/ui/Button";
+import TextLink from "@/components/ui/TextLink";
 import { generateSEO } from "@/lib/seo";
 import { navLabel, site } from "@/data/site";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -33,22 +35,13 @@ export default function ContactPage() {
             <address className="text-foreground not-italic">
               <div className="mb-2">
                 <strong>Email:</strong>{" "}
-                <a
-                  href={`mailto:${site.email}`}
-                  className="text-yellow-500 hover:underline focus:outline-hidden focus:ring-2 focus:ring-yellow-500 rounded-sm"
-                >
-                  {site.email}
-                </a>
+                <TextLink href={`mailto:${site.email}`}>{site.email}</TextLink>
               </div>
               <div className="mb-2">
                 <strong>Phone:</strong>{" "}
-                <a
-                  href={`tel:${site.phone}`}
-                  className="text-yellow-500 hover:underline focus:outline-hidden focus:ring-2 focus:ring-yellow-500 rounded-sm"
-                  aria-label={`Call ${site.name} at ${site.phoneDisplay}`}
-                >
+                <TextLink href={`tel:${site.phone}`}>
                   {site.phoneDisplay}
-                </a>
+                </TextLink>
               </div>
               <div className="mb-2">
                 <strong>Location:</strong> {site.location}
@@ -60,24 +53,24 @@ export default function ContactPage() {
                 Find me on
               </h3>
               <nav className="flex space-x-4" aria-label="Social media links">
-                <a
+                <Button
                   href={site.social.github}
+                  variant="secondary"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-primary hover:bg-gray-700 border hover:text-white border-primary px-2 py-1 rounded-sm transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500"
-                  aria-label={`Visit ${site.name}'s GitHub profile (opens in new tab)`}
                 >
                   GitHub
-                </a>
-                <a
+                  <span className="sr-only"> (opens in new tab)</span>
+                </Button>
+                <Button
                   href={site.social.linkedin}
+                  variant="secondary"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-secondary hover:bg-gray-700 hover:text-white border border-secondary px-2 py-1 rounded-sm transition-colors focus:outline-hidden focus:ring-2 focus:ring-green-500"
-                  aria-label={`Visit ${site.name}'s LinkedIn profile (opens in new tab)`}
                 >
                   LinkedIn
-                </a>
+                  <span className="sr-only"> (opens in new tab)</span>
+                </Button>
               </nav>
             </div>
           </div>

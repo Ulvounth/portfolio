@@ -44,7 +44,7 @@ export default function Dialog({
         type="button"
         onClick={() => dialogRef.current?.close()}
         aria-label={`Close ${label}`}
-        className="absolute top-4 right-4 z-10 rounded-full bg-white p-2 text-gray-900 hover:bg-gray-200"
+        className="absolute top-4 right-4 z-10 rounded-full bg-foreground p-2 text-background hover:bg-accent"
       >
         <XMarkIcon className="h-5 w-5" aria-hidden="true" />
       </button>

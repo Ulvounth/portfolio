@@ -7,7 +7,7 @@ import { site } from "@/data/site";
 import { openGraphDefaults, twitterDefaults } from "@/lib/seo";
 import { personJsonLd } from "@/lib/structured-data";
 import JsonLd from "./components/JsonLd";
-import { inter } from "./fonts";
+import { inter, jetbrainsMono } from "./fonts";
 
 // Canonical URL and share image are set per page (lib/seo.ts and the
 // opengraph-image file), so nothing here may claim a canonical for every route.
@@ -31,7 +31,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="antialiased flex flex-col min-h-screen bg-background text-foreground">
         <JsonLd data={personJsonLd()} />
         <a href="#main-content" className="skip-link">

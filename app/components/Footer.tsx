@@ -2,7 +2,7 @@ import { FaLinkedin, FaGithub, FaFacebook } from "react-icons/fa";
 import { site } from "@/data/site";
 
 const Footer = () => (
-  <footer className="text-gray-300 border-t border-gray-200">
+  <footer className="text-muted border-t border-border">
     <div className="container mx-auto px-4 py-6 text-center">
       <p>
         &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
@@ -11,7 +11,7 @@ const Footer = () => (
         <a
           href={site.social.github}
           aria-label="GitHub (opens in new tab)"
-          className="text-gray-400 hover:text-white"
+          className="text-muted hover:text-accent"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -21,7 +21,7 @@ const Footer = () => (
         <a
           href={site.social.linkedin}
           aria-label="LinkedIn (opens in new tab)"
-          className="text-gray-400 hover:text-white"
+          className="text-muted hover:text-accent"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -31,7 +31,7 @@ const Footer = () => (
         <a
           href={site.social.facebook}
           aria-label="Facebook (opens in new tab)"
-          className="text-gray-400 hover:text-white"
+          className="text-muted hover:text-accent"
           target="_blank"
           rel="noopener noreferrer"
         >

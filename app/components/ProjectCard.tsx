@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Card from "@/components/ui/Card";
 import type { Project } from "@/data/projects";
 import ProjectLinks from "./ProjectLinks";
 import ProjectTags from "./ProjectTags";
@@ -13,12 +14,12 @@ export default function ProjectCard({
 }) {
   const Heading = headingLevel === 3 ? "h3" : "h2";
   return (
-    <article className="bg-background p-2 border border-white border-solid rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 hover:border-blue-500 flex flex-col h-full">
-      <Link
-        href={`/projects/${project.id}`}
-        className="block grow p-4"
-        aria-label={`View details for ${project.title} project`}
-      >
+    <Card
+      as="article"
+      interactive
+      className="relative p-2 overflow-hidden flex flex-col h-full"
+    >
+      <div className="grow p-4">
         <div className="relative w-full h-48 md:h-64 lg:h-72 mb-4">
           <Image
             src={project.images[0]}
@@ -29,16 +30,22 @@ export default function ProjectCard({
           />
         </div>
         <Heading className="text-xl font-semibold text-foreground">
-          {project.title}
+          {/* The link is the title, and its ::after stretches over the whole card. */}
+          <Link
+            href={`/projects/${project.id}`}
+            className="after:absolute after:inset-0 focus-visible:outline-hidden focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-accent"
+          >
+            {project.title}
+          </Link>
         </Heading>
-        <p className="text-gray-300 mt-2 line-clamp-3">{project.description}</p>
+        <p className="text-muted mt-2 line-clamp-3">{project.description}</p>
         <div className="mt-4">
           <ProjectTags tags={project.tags} />
         </div>
-      </Link>
-      <div className="p-4 pt-0">
+      </div>
+      <div className="relative z-10 p-4 pt-0">
         <ProjectLinks project={project} />
       </div>
-    </article>
+    </Card>
   );
 }

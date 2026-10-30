@@ -3,7 +3,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 const linkClassName =
-  "text-purple-700 underline decoration-purple-300 underline-offset-2 hover:text-purple-900";
+  "text-accent underline underline-offset-2 hover:text-accent-strong";
 
 const components: Components = {
   h1: ({ children }) => <p className="font-semibold">{children}</p>,
@@ -36,17 +36,19 @@ const components: Components = {
     );
   },
   blockquote: ({ children }) => (
-    <blockquote className="border-l-2 border-purple-200 pl-3 text-gray-600">
+    <blockquote className="border-l-2 border-border-control pl-3 text-muted">
       {children}
     </blockquote>
   ),
   code: ({ children }) => (
-    <code className="rounded-sm bg-gray-100 px-1 py-0.5 text-xs">
+    <code className="rounded-sm bg-background px-1 py-0.5 font-mono text-xs">
       {children}
     </code>
   ),
   pre: ({ children }) => (
-    <pre className="overflow-x-auto rounded-sm bg-gray-100 p-3">{children}</pre>
+    <pre className="overflow-x-auto rounded-sm bg-background p-3 font-mono">
+      {children}
+    </pre>
   ),
   table: ({ children }) => (
     <div className="overflow-x-auto">
@@ -56,12 +58,12 @@ const components: Components = {
     </div>
   ),
   th: ({ children }) => (
-    <th className="border-b border-gray-300 px-2 py-2 font-semibold">
+    <th className="border-b border-border-control px-2 py-2 font-semibold">
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className="border-b border-gray-200 px-2 py-2 align-top">{children}</td>
+    <td className="border-b border-border px-2 py-2 align-top">{children}</td>
   ),
 };
 

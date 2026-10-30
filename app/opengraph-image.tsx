@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/data/site";
 import { shareImage } from "@/lib/seo";
+import { themeColors } from "@/lib/theme";
 
 export const alt = `${site.name} – ${site.title}`;
 export const size = { width: shareImage.width, height: shareImage.height };
@@ -18,16 +19,16 @@ export default function OpenGraphImage() {
         justifyContent: "center",
         padding: 96,
         background: site.themeColor,
-        color: "#FFFFFF",
+        color: themeColors.foreground,
       }}
     >
       <div style={{ fontSize: 96, fontWeight: 800, lineHeight: 1.1 }}>
         {site.name}
       </div>
-      <div style={{ fontSize: 56, marginTop: 24, color: "#D1D5DB" }}>
+      <div style={{ fontSize: 56, marginTop: 24, color: themeColors.muted }}>
         {site.title}
       </div>
-      <div style={{ fontSize: 36, marginTop: 64, color: "#9CA3AF" }}>
+      <div style={{ fontSize: 36, marginTop: 64, color: themeColors.accent }}>
         {new URL(site.url).host}
       </div>
     </div>,

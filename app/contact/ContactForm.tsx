@@ -7,6 +7,8 @@ import {
   type ChangeEvent,
   type FormEvent,
 } from "react";
+import Button from "@/components/ui/Button";
+import { fieldClasses } from "@/components/ui/fieldStyles";
 import {
   contactHoneypotField,
   contactLimits,
@@ -89,7 +91,7 @@ export default function ContactForm() {
       {successMessage && (
         <div
           role="status"
-          className="text-green-800 mb-4 p-3 bg-green-100 rounded-sm border border-green-300"
+          className="text-success mb-4 p-3 bg-surface rounded-md border border-success"
         >
           {successMessage}
         </div>
@@ -98,7 +100,7 @@ export default function ContactForm() {
         <div
           role="alert"
           aria-live="assertive"
-          className="text-red-800 mb-4 p-3 bg-red-100 rounded-sm border border-red-300"
+          className="text-danger mb-4 p-3 bg-surface rounded-md border border-danger"
         >
           {errorMessage}
         </div>
@@ -112,7 +114,7 @@ export default function ContactForm() {
         <div>
           <label className="block text-foreground mb-1" htmlFor="name">
             Name{" "}
-            <span className="text-red-500" aria-label="required">
+            <span className="text-danger" aria-label="required">
               *
             </span>
           </label>
@@ -122,7 +124,7 @@ export default function ContactForm() {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full border border-gray-600 bg-background p-2 rounded-sm focus:outline-hidden focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
+            className={`${fieldClasses} rounded-md`}
             autoComplete="name"
             minLength={contactLimits.name.min}
             maxLength={contactLimits.name.max}
@@ -138,7 +140,7 @@ export default function ContactForm() {
         <div>
           <label className="block text-foreground mb-1" htmlFor="email">
             Email{" "}
-            <span className="text-red-500" aria-label="required">
+            <span className="text-danger" aria-label="required">
               *
             </span>
           </label>
@@ -148,7 +150,7 @@ export default function ContactForm() {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border border-gray-600 bg-background p-2 rounded-sm focus:outline-hidden focus:border-primary focus:ring-2 focus:ring-blue-500 text-foreground"
+            className={`${fieldClasses} rounded-md`}
             autoComplete="email"
             maxLength={contactLimits.email.max}
             disabled={loading}
@@ -163,7 +165,7 @@ export default function ContactForm() {
         <div>
           <label className="block text-foreground mb-1" htmlFor="message">
             Message{" "}
-            <span className="text-red-500" aria-label="required">
+            <span className="text-danger" aria-label="required">
               *
             </span>
           </label>
@@ -172,7 +174,7 @@ export default function ContactForm() {
             name="message"
             value={formData.message}
             onChange={handleChange}
-            className="w-full border border-gray-600 bg-background p-2 rounded-sm focus:outline-hidden focus:border-primary focus:ring-2 focus:ring-blue-500 h-32 text-foreground"
+            className={`${fieldClasses} h-32 rounded-md`}
             minLength={contactLimits.message.min}
             maxLength={contactLimits.message.max}
             disabled={loading}
@@ -196,16 +198,9 @@ export default function ContactForm() {
             autoComplete="off"
           />
         </div>
-        <button
-          type="submit"
-          className={`bg-primary text-white px-4 py-2 rounded-sm hover:bg-primaryDark transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-            loading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={loading}
-          aria-describedby="submit-help"
-        >
+        <Button type="submit" disabled={loading} aria-describedby="submit-help">
           {loading ? "Sending..." : "Send Message"}
-        </button>
+        </Button>
         <div id="submit-help" className="sr-only">
           {loading
             ? "Please wait while your message is being sent"

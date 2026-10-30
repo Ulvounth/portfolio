@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import Card from "@/components/ui/Card";
 import { skills } from "@/data/skills";
 
 export default function Skills() {
@@ -17,9 +18,9 @@ export default function Skills() {
         aria-label="Technical skills and technologies"
       >
         {skills.map((skill) => (
-          <div
+          <Card
             key={skill.name}
-            className="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow flex flex-col items-center"
+            className="p-6 flex flex-col items-center"
             role="listitem"
           >
             <div
@@ -41,7 +42,7 @@ export default function Skills() {
             >
               {skill.name}
             </p>
-          </div>
+          </Card>
         ))}
       </div>
     </section>
