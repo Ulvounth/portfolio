@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
-import { navigation, site } from "@/data/site";
+import Logo from "@/components/ui/Logo";
+import { navigation } from "@/data/site";
 import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
 
@@ -20,13 +20,7 @@ export default function Header() {
         aria-label="Main navigation"
       >
         <Link href="/" aria-label="Go to homepage">
-          <Image
-            src="/images/logo-new.webp"
-            alt={`${site.name} Portfolio Logo`}
-            width={48}
-            height={48}
-            className="rounded-sm object-cover"
-          />
+          <Logo className="h-12 w-12" />
         </Link>
         <MobileMenu>
           <ul className="mt-16 space-y-6">{links(true)}</ul>
