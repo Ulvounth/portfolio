@@ -48,7 +48,7 @@ export default function Experience() {
             >
               <p className="font-mono italic">{entry.period}</p>
               <h3 className="text-lg font-black">{entry.title}</h3>
-              <p>{entry.description}</p>
+              <p className="whitespace-pre-line">{entry.description}</p>
             </article>
             {index < experience.length - 1 && (
               <hr

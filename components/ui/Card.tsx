@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import type { HTMLAttributes } from "react";
 
 // A bordered surface. `interactive` adds the hover state for cards that link somewhere.
 export default function Card({
@@ -6,8 +6,8 @@ export default function Card({
   interactive = false,
   className = "",
   ...props
-}: ComponentProps<"div"> & {
-  as?: "div" | "article" | "section";
+}: HTMLAttributes<HTMLElement> & {
+  as?: "div" | "article" | "section" | "li";
   interactive?: boolean;
 }) {
   return (

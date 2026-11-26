@@ -1,4 +1,4 @@
-import { FaLinkedin, FaGithub, FaFacebook } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { site } from "@/data/site";
 
 const Footer = () => (
@@ -26,16 +26,6 @@ const Footer = () => (
           rel="noopener noreferrer"
         >
           <FaLinkedin size={24} />
-        </a>
-
-        <a
-          href={site.social.facebook}
-          aria-label="Facebook (opens in new tab)"
-          className="text-muted hover:text-accent"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <FaFacebook size={24} />
         </a>
       </div>
     </div>

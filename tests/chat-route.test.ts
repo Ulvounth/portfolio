@@ -111,7 +111,7 @@ describe("chat API", () => {
     expect(options.reasoning_effort).toBe("low");
     expect(options.messages[0].content).toContain(".NET");
     expect(options.messages[0].content).toContain(
-      "Seeking developer opportunities",
+      "Full-Stack Developer, RoboConnect",
     );
     expect(options.messages[0].content).not.toMatch(
       /Casa Sue|React E-Commerce/,

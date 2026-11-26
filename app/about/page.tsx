@@ -32,6 +32,15 @@ export default function AboutPage() {
             ))}
           </div>
 
+          <section className="space-y-4" aria-labelledby="how-i-work-heading">
+            <h2 id="how-i-work-heading" className="text-2xl font-semibold">
+              {about.howIWork.heading}
+            </h2>
+            <p className="text-lg leading-relaxed text-muted">
+              {about.howIWork.text}
+            </p>
+          </section>
+
           <Card as="section" className="p-6" aria-labelledby="studies-heading">
             <h2 id="studies-heading" className="text-2xl font-semibold">
               Studies

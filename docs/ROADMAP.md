@@ -156,3 +156,14 @@ Add one entry per finished session: what was done, what was left, anything the n
 - **The F6 `aria-label` task is mostly done.** Removed the overrides on `CVDownload`, the contact page links and `ProjectLinks` (the "opens in new tab" hint is now visually hidden text inside the link, and project links say which project they belong to). Project cards use a stretched link around the title (`after:absolute after:inset-0` on the link, `relative` on the card, `z-10` on the buttons row), so the link name is the project title. `label-content-name-mismatch` is **no longer disabled in axe**: `e2e/a11y.spec.ts` has no `deferredRules` at all. Remaining `aria-label`s are on landmarks, icon-only controls and the chat UI (F7), none of which show visible text.
 - Not run: a keyboard pass over the stretched project card (the focus ring is drawn on the card through `::after`); look at it in F6c.
 - Baseline: `npm run check` (131 Vitest tests), `npm run build` and `npm run test:e2e` (73 tests, no axe exclusions) pass.
+
+### RoboConnect content and Next.js update – 2026-11-26
+
+- `next` was updated to 16.4.6 (lockfile only): 16.4.3 refused to start because of known advisories.
+- RoboConnect was added to `data/experience.ts` as the only current entry, replacing "Seeking developer opportunities" (that text is already covered by the story in `data/about.ts`). The founder approved naming RoboConnect and asked for more detail and responsibility; Andreas chose not to send them the final wording. Do not add RoboConnect details beyond what is in `data/`: the source repository is private.
+- `data/about.ts` has a second intro paragraph and a `howIWork` section, shown on `/about` before Studies. The experience description uses a blank line before the stack list (`whitespace-pre-line`).
+- The chat prompt now describes the current role (it said "without a job") and includes `howIWork`.
+- `site.title` is now "Junior Full-Stack Developer". The home intro, `site.description` and the About story say that Andreas is looking for a junior role in Spain or Norway and can relocate. `site.location` is unchanged. The RoboConnect role is unpaid; the site does not state pay or employment type, and nothing on it may suggest paid employment.
+- Skills are grouped (`skillGroups` in `data/skills.ts`; `skills` is the flat list used by the chat prompt and JSON-LD). Jest and the .NET tile were removed (.NET is still named in the study texts); Supabase, PostgreSQL, Prisma and Playwright were added. New icons: Simple Icons 15.0.0 paths with a fill colour (Supabase, PostgreSQL, Prisma, Node.js) and the Devicon 2.17.0 Playwright icon on a white background. `Skills.tsx` is now a list per group, with decorative icons (`alt=""`) and no `aria-label` on the names.
+- The Facebook link was removed from the footer and from `site.social`.
+- Open: the CV PDF needs the new role.

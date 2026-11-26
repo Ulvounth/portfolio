@@ -69,6 +69,8 @@ describe("about page content", () => {
   it("has no empty or duplicate text", () => {
     const text = [
       ...about.intro,
+      about.howIWork.heading,
+      about.howIWork.text,
       about.studies.text,
       ...about.studies.items,
       ...about.story,

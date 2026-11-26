@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import Card from "@/components/ui/Card";
-import { skills } from "@/data/skills";
+import { skillGroups } from "@/data/skills";
 
 export default function Skills() {
   return (
@@ -12,39 +12,38 @@ export default function Skills() {
       <h2 id="skills-heading" className="text-3xl font-semibold">
         My Skills
       </h2>
-      <div
-        className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-8"
-        role="list"
-        aria-label="Technical skills and technologies"
-      >
-        {skills.map((skill) => (
-          <Card
-            key={skill.name}
-            className="p-6 flex flex-col items-center"
-            role="listitem"
+      {skillGroups.map((group) => (
+        <div key={group.id} className="mt-8">
+          <h3
+            id={`skills-${group.id}`}
+            className="font-mono text-lg text-muted"
           >
-            <div
-              className={`${
-                skill.needsBackground ? "bg-white rounded-full p-3" : ""
-              }`}
-            >
-              <Image
-                src={skill.src}
-                alt={`${skill.name} technology logo`}
-                width={64}
-                height={64}
-                aria-hidden="true"
-              />
-            </div>
-            <p
-              className="mt-4 font-semibold"
-              aria-label={`Skilled in ${skill.name}`}
-            >
-              {skill.name}
-            </p>
-          </Card>
-        ))}
-      </div>
+            {group.title}
+          </h3>
+          <ul
+            className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-4"
+            aria-labelledby={`skills-${group.id}`}
+          >
+            {group.skills.map((skill) => (
+              <Card
+                as="li"
+                key={skill.name}
+                className="p-6 flex flex-col items-center"
+              >
+                <div
+                  className={
+                    skill.needsBackground ? "bg-white rounded-full p-3" : ""
+                  }
+                >
+                  {/* Decorative: the name below says the same. */}
+                  <Image src={skill.src} alt="" width={64} height={64} />
+                </div>
+                <p className="mt-4 font-semibold">{skill.name}</p>
+              </Card>
+            ))}
+          </ul>
+        </div>
+      ))}
     </section>
   );
 }

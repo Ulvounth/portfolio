@@ -1,11 +1,12 @@
 export const experience = [
   {
-    id: "current",
-    title: "Seeking developer opportunities",
-    period: "Now",
+    id: "roboconnect",
+    title: "Full-Stack Developer, RoboConnect",
+    period: "Apr 2026 – Now",
     current: true,
+    // A blank line starts a new paragraph in the timeline.
     description:
-      "With my front-end and backend studies completed, I am looking for a developer role. In the meantime, I am independently exploring practical AI tools and context engineering, focusing on how to provide useful instructions, context, and examples to AI models.",
+      "I help build RoboConnect (roboconnect.no), a B2B platform that matches industrial companies with system integrators. I am responsible for the integrator MVP, a service where an integrator invites their own customer to describe what they need and receives a quality-checked project brief. I work across the whole solution: what users see, the logic behind it and the database. I have also worked on the main platform (sign-up, sign-in, dashboards and user roles) and on internal tools, including a CRM system. Because I have tested every part of the platform, including payments and admin functions, I understand how a complete technology platform fits together.\n\nStack: Next.js, TypeScript, Tailwind, Prisma, Supabase, Stripe, Resend, Playwright and Vercel.",
   },
   {
     id: "backend",
