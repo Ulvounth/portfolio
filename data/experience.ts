@@ -6,7 +6,7 @@ export const experience = [
     current: true,
     // A blank line starts a new paragraph in the timeline.
     description:
-      "I help build RoboConnect (roboconnect.no), a B2B platform that matches industrial companies with system integrators. I am responsible for the integrator MVP, a service where an integrator invites their own customer to describe what they need and receives a quality-checked project brief. I work across the whole solution: what users see, the logic behind it and the database. I have also worked on the main platform (sign-up, sign-in, dashboards and user roles) and on internal tools, including a CRM system. Because I have tested every part of the platform, including payments and admin functions, I understand how a complete technology platform fits together.\n\nStack: Next.js, TypeScript, Tailwind, Prisma, Supabase, Stripe, Resend, Playwright and Vercel.",
+      "RoboConnect (roboconnect.no) connects industrial companies with system integrators, and I help build the platform.\n\nMy main project is the integrator MVP, which I'm responsible for. Integrators invite their customers to describe what they need, and get a quality-checked project brief back. I work on the frontend, backend and database.\n\nI've also worked on sign-up, login, dashboards and user roles on the main platform, plus internal tools like a CRM system. I've tested the whole platform, including payments and admin, so I've learned a lot about how everything fits together.\n\nThis is an unpaid role. It started as a summer position, and I've stayed on to keep building and learning.\n\nStack: Next.js, TypeScript, Tailwind, Prisma, Supabase, Stripe, Resend, Playwright and Vercel.",
   },
   {
     id: "backend",
